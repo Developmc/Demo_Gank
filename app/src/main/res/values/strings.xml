@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GankDemo</string>
+    <string name="empty_recycle_view">Nothing to show</string>
+    <string name="error_recycle_view">Error</string>
 </resources>

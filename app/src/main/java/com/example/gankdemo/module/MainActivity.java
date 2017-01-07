@@ -1,8 +1,10 @@
-package com.example.gankdemo;
+package com.example.gankdemo.module;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import com.example.gankdemo.R;
+import com.example.gankdemo.base.BaseActivity;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
@@ -15,17 +17,26 @@ import java.util.List;
 /**Created by clement on 17/01/07.
  * 框架：单activity + 多fragment
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int onBindLayoutID() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    public void initBehavior(Bundle savedInstanceState) {
+
+        if(savedInstanceState==null){
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            MainFragment mainFragment = new MainFragment();
+            fragmentTransaction.add(R.id.content_layout,mainFragment,
+                    MainFragment.class.getSimpleName()).commit();
+        }
 //        testGetAndroid(10,1);
 //        testGetIOS(10,1);
 //        testGetAll(10,1);
-        testGetWelfare(10,1);
+//        testGetWelfare(10,1);
 
     }
 
