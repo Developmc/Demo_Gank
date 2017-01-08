@@ -2,9 +2,6 @@ package com.example.gankdemo.http.manager;
 
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.model.AndroidModel;
-import com.example.gankdemo.model.IOSModel;
-import com.example.gankdemo.model.WelfareModel;
 
 import java.util.List;
 
@@ -20,18 +17,18 @@ public class RetrofitHttpHelper extends RetrofitHttp{
      * @param subscriber
      * @param num
      */
-    public static void getAndroid(BaseSubscriber<List<AndroidModel>> subscriber, int num, int page){
+    public static void getAndroid(BaseSubscriber<List<AllModel>> subscriber, int num, int page){
         //创建观察者
-        Observable<List<AndroidModel>> observable = getService().getAndroid(num,page)
-                .map(new HttpResultFunc<List<AndroidModel>>());
+        Observable<List<AllModel>> observable = getService().getAndroid(num,page)
+                .map(new HttpResultFunc<List<AllModel>>());
         //订阅
         toSubscribe(observable,subscriber);
     }
 
-    public static void getIOS(BaseSubscriber<List<IOSModel>> subscriber,int num,int page){
+    public static void getIOS(BaseSubscriber<List<AllModel>> subscriber,int num,int page){
         //创建观察者
-        Observable<List<IOSModel>> observable = getService().getIOS(num,page)
-                .map(new HttpResultFunc<List<IOSModel>>());
+        Observable<List<AllModel>> observable = getService().getIOS(num,page)
+                .map(new HttpResultFunc<List<AllModel>>());
         //订阅
         toSubscribe(observable,subscriber);
     }
@@ -44,10 +41,10 @@ public class RetrofitHttpHelper extends RetrofitHttp{
         toSubscribe(observable,subscriber);
     }
 
-    public static void getWelfare(BaseSubscriber<List<WelfareModel>> subscriber, int num, int page){
+    public static void getWelfare(BaseSubscriber<List<AllModel>> subscriber, int num, int page){
         //创建观察者
-        Observable<List<WelfareModel>> observable = getService().getWelfare(num,page)
-                .map(new HttpResultFunc<List<WelfareModel>>());
+        Observable<List<AllModel>> observable = getService().getWelfare(num,page)
+                .map(new HttpResultFunc<List<AllModel>>());
         //订阅
         toSubscribe(observable,subscriber);
     }

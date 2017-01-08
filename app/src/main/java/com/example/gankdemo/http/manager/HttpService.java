@@ -2,9 +2,6 @@ package com.example.gankdemo.http.manager;
 
 import com.example.gankdemo.http.entity.HttpResult;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.model.AndroidModel;
-import com.example.gankdemo.model.IOSModel;
-import com.example.gankdemo.model.WelfareModel;
 
 import java.util.List;
 
@@ -18,15 +15,15 @@ import rx.Observable;
 
 public interface HttpService {
     @GET("data/Android/{num}/{page}")
-    Observable<HttpResult<List<AndroidModel>>> getAndroid(@Path("num") int num, @Path("page") int page);
+    Observable<HttpResult<List<AllModel>>> getAndroid(@Path("num") int num, @Path("page") int page);
 
     @GET("data/iOS/{num}/{page}")
-    Observable<HttpResult<List<IOSModel>>> getIOS(@Path("num") int num, @Path("page") int page);
+    Observable<HttpResult<List<AllModel>>> getIOS(@Path("num") int num, @Path("page") int page);
 
     @GET("data/all/{num}/{page}")
     Observable<HttpResult<List<AllModel>>> getAll(@Path("num") int num, @Path("page") int page);
 
     @GET("data/福利/{num}/{page}")
-    Observable<HttpResult<List<WelfareModel>>> getWelfare(@Path("num") int num, @Path("page") int page);
+    Observable<HttpResult<List<AllModel>>> getWelfare(@Path("num") int num, @Path("page") int page);
 
 }

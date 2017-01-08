@@ -1,16 +1,16 @@
 package com.example.gankdemo.module;
 
 import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.BaseActivity;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.model.AndroidModel;
-import com.example.gankdemo.model.IOSModel;
-import com.example.gankdemo.model.WelfareModel;
 
 import java.util.List;
 
@@ -21,6 +21,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public int onBindLayoutID() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//            WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+//            layoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS|layoutParams.flags);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         return R.layout.activity_main;
     }
 
@@ -41,7 +47,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void testGetAndroid(int num,int page){
-        BaseSubscriber<List<AndroidModel>> subscriber = new BaseSubscriber<List<AndroidModel>>(){
+        BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
             @Override
             public void onCompleted() {
                 super.onCompleted();
@@ -53,7 +59,7 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(List<AndroidModel> androidModels) {
+            public void onNext(List<AllModel> androidModels) {
                 super.onNext(androidModels);
             }
         };
@@ -61,7 +67,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void testGetIOS(int num,int page){
-        BaseSubscriber<List<IOSModel>> subscriber = new BaseSubscriber<List<IOSModel>>(){
+        BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
             @Override
             public void onCompleted() {
                 super.onCompleted();
@@ -73,7 +79,7 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(List<IOSModel> iosModels) {
+            public void onNext(List<AllModel> iosModels) {
                 super.onNext(iosModels);
             }
         };
@@ -101,7 +107,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void testGetWelfare(int num,int page){
-        BaseSubscriber<List<WelfareModel>> subscriber = new BaseSubscriber<List<WelfareModel>>(){
+        BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
             @Override
             public void onCompleted() {
                 super.onCompleted();
@@ -113,7 +119,7 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(List<WelfareModel> welfareModels) {
+            public void onNext(List<AllModel> welfareModels) {
                 super.onNext(welfareModels);
             }
         };
