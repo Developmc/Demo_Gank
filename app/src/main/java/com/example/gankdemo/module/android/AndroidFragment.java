@@ -1,5 +1,6 @@
 package com.example.gankdemo.module.android;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -53,24 +54,38 @@ public class AndroidFragment extends LazyFragment implements RecyclerArrayAdapte
                 ToastUtil.show(getContext(),position+"");
             }
         });
-//        List<AllModel> list = new ArrayList<>();
-//        for(int i=0;i<30;i++){
-//            AllModel model = new AllModel();
-//            model.setDesc("title");
-//            model.setWho("who");
-//            model.setPublishedAt("2017/1/8");
-//            list.add(model);
-//        }
         recyclerView.setAdapterWithProgress(adapter);
         adapter.setMore(R.layout.view_more,this);
         adapter.setNoMore(R.layout.view_nomore);
         recyclerView.setRefreshListener(this);
+        recyclerView.showProgress();
+        recyclerView.getSwipeToRefresh().setColorSchemeResources(R.color.colorPrimary,
+                R.color.green,R.color.orange);
         onRefresh();
     }
 
     @Override
     public void onMoreShow() {
+        BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+            @Override
+            public void onNext(List<AllModel> allModels) {
+                super.onNext(allModels);
+                adapter.addAll(allModels);
+                adapter.notifyDataSetChanged();
+                page++;
+            }
+        };
+        RetrofitHttpHelper.getAndroid(subscriber,NUMBER,page);
     }
 
     @Override
@@ -90,7 +105,7 @@ public class AndroidFragment extends LazyFragment implements RecyclerArrayAdapte
 
     @Override
     public void onRefresh() {
-        page = 0;
+        page = 1;
         BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
             @Override
             public void onCompleted() {
@@ -105,13 +120,15 @@ public class AndroidFragment extends LazyFragment implements RecyclerArrayAdapte
             @Override
             public void onNext(List<AllModel> allModels) {
                 super.onNext(allModels);
-                adapter.clear();
+                if(adapter.getDatas()!=null || !adapter.getDatas().isEmpty()){
+                    adapter.clear();
+                }
                 adapter.addAll(allModels);
                 adapter.notifyDataSetChanged();
-                recyclerView.showRecycler();
-                page = 1;
+                page++;
             }
         };
         RetrofitHttpHelper.getAndroid(subscriber,NUMBER,page);
     }
+
 }

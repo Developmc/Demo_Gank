@@ -4,6 +4,8 @@ package com.example.gankdemo.module.home;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.BaseFragment;
@@ -27,6 +29,8 @@ public class MainFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+    @BindView(R.id.iv_icon)
+    ImageView iv_icon;
     private List<String> titles = new ArrayList<>();
     @Override
     public int onBindLayoutID() {
@@ -36,6 +40,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public void initBehavior(View rootView) {
         initData();
+        initImageView();
         initTabLayout();
         initViewPager();
     }
@@ -45,6 +50,18 @@ public class MainFragment extends BaseFragment {
         titles.add("IOS");
         titles.add("Welfare");
         titles.add("All");
+    }
+    private void initImageView(){
+        iv_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //获取屏幕的高度
+                int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+                ViewGroup.LayoutParams params = iv_icon.getLayoutParams();
+                params.height = screenHeight;
+                iv_icon.setLayoutParams(params);
+            }
+        });
     }
     private void initTabLayout(){
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);

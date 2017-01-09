@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.util.TimeUtil;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
@@ -59,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
             super.setData(data);
             tv_title.setText(data.getDesc());
             tv_name.setText(data.getWho());
-            tv_date.setText(data.getPublishedAt());
+            tv_date.setText(TimeUtil.getDate(data.getPublishedAt()));
         }
     }
 
