@@ -1,10 +1,7 @@
-package com.example.gankdemo.module;
+package com.example.gankdemo.module.home;
 
 import android.app.FragmentTransaction;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.BaseActivity;
@@ -21,12 +18,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public int onBindLayoutID() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-//            WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-//            layoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS|layoutParams.flags);
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
         return R.layout.activity_main;
     }
 
@@ -39,10 +30,6 @@ public class MainActivity extends BaseActivity {
             fragmentTransaction.add(R.id.content_layout,mainFragment,
                     MainFragment.class.getSimpleName()).commit();
         }
-//        testGetAndroid(10,1);
-//        testGetIOS(10,1);
-//        testGetAll(10,1);
-//        testGetWelfare(10,1);
 
     }
 

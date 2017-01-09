@@ -1,4 +1,4 @@
-package com.example.gankdemo.module;
+package com.example.gankdemo.module.home.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import com.example.gankdemo.model.AllModel;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,9 +20,10 @@ import butterknife.ButterKnife;
  * Created by developmc on 17/1/8.
  */
 
-public class AndroidRecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
+public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
     private Context mContext;
-    public AndroidRecyclerViewAdapter(Context context) {
+    private com.example.gankdemo.custom.listener.OnItemClickListener<AllModel> onItemClickListener;
+    public RecyclerViewAdapter(Context context) {
         super(context);
         this.mContext = context;
     }
@@ -38,9 +41,17 @@ public class AndroidRecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
         TextView tv_name;
         @BindView(R.id.tv_date)
         TextView tv_date;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(onItemClickListener!=null){
+                        onItemClickListener.onItemClick(itemView,getAdapterPosition());
+                    }
+                }
+            });
         }
 
         @Override
@@ -50,5 +61,20 @@ public class AndroidRecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
             tv_name.setText(data.getWho());
             tv_date.setText(data.getPublishedAt());
         }
+    }
+
+    /**设置监听器
+     * @param onItemClickListener
+     */
+    public void setOnItemClickListener(
+            com.example.gankdemo.custom.listener.OnItemClickListener<AllModel> onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    /**获取数据源
+     * @return
+     */
+    public List<AllModel> getDatas(){
+        return mObjects;
     }
 }
