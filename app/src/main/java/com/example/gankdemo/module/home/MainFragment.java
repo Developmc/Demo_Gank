@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,11 +13,13 @@ import android.widget.ImageView;
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.base.fragment.LazyFragment;
-import com.example.gankdemo.module.all.AllFragment;
-import com.example.gankdemo.module.android.AndroidFragment;
+import com.example.gankdemo.http.manager.RetrofitHttpHelper;
+import com.example.gankdemo.http.subscriber.BaseSubscriber;
+import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.module.ModelFragment.ModelFragment;
 import com.example.gankdemo.module.home.adapter.FragmentAdapter;
-import com.example.gankdemo.module.ios.IOSFragment;
-import com.example.gankdemo.module.welfare.WelfareFragment;
+import com.example.gankdemo.module.home.type.ModelType;
+import com.example.gankdemo.util.ImageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class MainFragment extends BaseFragment {
     //记录ImageView原始的高度，和放大后的高度
     private int originalHeight,enLargeHeight;
     private boolean isEnLarge = false ;
+    private List<String> imageUrlList = new ArrayList<>();
     @Override
     public int onBindLayoutID() {
         return R.layout.fragment_main;
@@ -48,6 +50,8 @@ public class MainFragment extends BaseFragment {
 
     @Override
     public void initBehavior(View rootView) {
+        //请求获取图片列表
+        getImageListFromNet();
         initData();
         initImageView();
         initTabLayout();
@@ -57,8 +61,8 @@ public class MainFragment extends BaseFragment {
     private void initData(){
         titles.add("Android");
         titles.add("IOS");
-        titles.add("Welfare");
         titles.add("All");
+        titles.add("Welfare");
     }
     private void initImageView(){
         iv_icon.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +70,6 @@ public class MainFragment extends BaseFragment {
             public void onClick(View view) {
                 if(originalHeight==0 && enLargeHeight==0){
                     //获取屏幕的高度
-//                    enLargeHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-//                    int tabLayoutHeight = tabLayout.getHeight();
-//                    enLargeHeight = enLargeHeight-tabLayoutHeight;
                     enLargeHeight = rootView.getHeight();
                     originalHeight = iv_icon.getHeight();
                 }
@@ -114,7 +115,6 @@ public class MainFragment extends BaseFragment {
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
         float tempHeight = val*height;
         params.height = (int)tempHeight;
-        Log.d("Height,val",tempHeight+" , "+val);
         iv_icon.setLayoutParams(params);
     }
     private void initTabLayout(){
@@ -126,10 +126,18 @@ public class MainFragment extends BaseFragment {
     }
     private void initViewPager(){
         List<LazyFragment> fragments = new ArrayList<>();
-        AndroidFragment androidFragment = new AndroidFragment();
-        IOSFragment iosFragment = new IOSFragment();
-        AllFragment allFragment = new AllFragment();
-        WelfareFragment welfareFragment = new WelfareFragment();
+        ModelFragment androidFragment = new ModelFragment();
+        androidFragment.setModelType(ModelType.Android);
+
+        ModelFragment iosFragment = new ModelFragment();
+        iosFragment.setModelType(ModelType.IOS);
+
+        ModelFragment allFragment = new ModelFragment();
+        allFragment.setModelType(ModelType.All);
+
+        ModelFragment welfareFragment = new ModelFragment();
+        welfareFragment.setModelType(ModelType.Welfare);
+
         fragments.add(androidFragment);
         fragments.add(iosFragment);
         fragments.add(allFragment);
@@ -156,8 +164,39 @@ public class MainFragment extends BaseFragment {
 
             }
         });
-
     }
 
+    /**
+     * 通过网络请求获取图片列表
+     */
+    private void getImageListFromNet(){
+        BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+            @Override
+            public void onNext(List<AllModel> allModels) {
+                for(AllModel model:allModels){
+                    imageUrlList.add(model.getUrl());
+                }
+                //设置图片
+                setImage(imageUrlList.get(0),iv_icon);
+            }
+        };
+        RetrofitHttpHelper.getWelfare(subscriber,10,1);
+    }
+
+    /**为imageView设置背景图
+     * @param url
+     */
+    private void setImage(String url,ImageView imageView){
+        ImageUtil.displayBigImage(getContext(),url,imageView);
+    }
 }

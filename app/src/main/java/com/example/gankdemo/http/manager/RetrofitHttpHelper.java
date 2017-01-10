@@ -2,6 +2,7 @@ package com.example.gankdemo.http.manager;
 
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.module.home.type.ModelType;
 
 import java.util.List;
 
@@ -47,5 +48,25 @@ public class RetrofitHttpHelper extends RetrofitHttp{
                 .map(new HttpResultFunc<List<AllModel>>());
         //订阅
         toSubscribe(observable,subscriber);
+    }
+
+    public static void getModelByType(ModelType modelType,BaseSubscriber<List<AllModel>> subscriber, int num, int page){
+        switch (modelType){
+            case Android:
+                getAndroid(subscriber,num,page);
+                break;
+            case IOS:
+                getIOS(subscriber, num, page);
+                break;
+            case All:
+                getAll(subscriber, num, page);
+                break;
+            case Welfare:
+                getWelfare(subscriber, num, page);
+                break;
+            default:
+                getAndroid(subscriber,num,page);
+                break;
+        }
     }
 }
