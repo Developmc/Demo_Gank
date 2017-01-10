@@ -61,7 +61,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
                 ToastUtil.show(getContext(),position+"");
             }
         });
-        recyclerView.setAdapterWithProgress(adapter);
+        recyclerView.setAdapter(adapter);
         adapter.setMore(R.layout.view_more,this);
         adapter.setNoMore(R.layout.view_nomore,this);
         recyclerView.setRefreshListener(this);
@@ -105,12 +105,10 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
     @Override
     public void onNoMoreShow() {
         ToastUtil.show(getContext(),"onNoMoreShow");
-        adapter.resumeMore();
     }
 
     @Override
     public void onNoMoreClick() {
-        adapter.resumeMore();
     }
 
     @Override
