@@ -63,10 +63,10 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         });
         recyclerView.setAdapterWithProgress(adapter);
         adapter.setMore(R.layout.view_more,this);
-        adapter.setNoMore(R.layout.view_nomore);
+        adapter.setNoMore(R.layout.view_nomore,this);
         recyclerView.setRefreshListener(this);
-        recyclerView.showProgress();
-        recyclerView.showEmpty();
+        recyclerView.setEmptyView(R.layout.view_empty);
+        recyclerView.setErrorView(R.layout.view_error);
         recyclerView.getSwipeToRefresh().setColorSchemeResources(R.color.colorPrimary,
                 R.color.green,R.color.orange);
         onRefresh();
@@ -83,6 +83,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                ToastUtil.show(getContext(),e.getMessage());
             }
 
             @Override
@@ -103,6 +104,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
 
     @Override
     public void onNoMoreShow() {
+        ToastUtil.show(getContext(),"onNoMoreShow");
         adapter.resumeMore();
     }
 
@@ -123,6 +125,8 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                recyclerView.showError();
+                ToastUtil.show(getContext(),e.getMessage());
             }
 
             @Override
