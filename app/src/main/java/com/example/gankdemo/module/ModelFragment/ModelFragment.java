@@ -52,7 +52,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         //设置分割线
-        SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration(8);
+        SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration(4);
         recyclerView.addItemDecoration(spaceItemDecoration);
         adapter = new RecyclerViewAdapter(getContext());
         adapter.setOnItemClickListener(new OnItemClickListener<AllModel>() {
@@ -67,6 +67,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         recyclerView.setRefreshListener(this);
         recyclerView.setEmptyView(R.layout.view_empty);
         recyclerView.setErrorView(R.layout.view_error);
+        recyclerView.showProgress();
         recyclerView.getSwipeToRefresh().setColorSchemeResources(R.color.colorPrimary,
                 R.color.green,R.color.orange);
         onRefresh();

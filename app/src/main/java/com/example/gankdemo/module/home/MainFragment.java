@@ -4,6 +4,7 @@ package com.example.gankdemo.module.home;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,8 +19,11 @@ import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
 import com.example.gankdemo.module.ModelFragment.ModelFragment;
 import com.example.gankdemo.module.home.adapter.FragmentAdapter;
+import com.example.gankdemo.module.home.behavior.AppBarLayoutBehavior;
 import com.example.gankdemo.module.home.type.ModelType;
+import com.example.gankdemo.util.AnimatorUtil;
 import com.example.gankdemo.util.ImageUtil;
+import com.example.gankdemo.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +33,7 @@ import butterknife.BindView;
 /**
  * MainFragment
  */
-public class MainFragment extends BaseFragment {
+public class MainFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.rootView)
     CoordinatorLayout rootView;
     @BindView(R.id.viewpager)
@@ -38,11 +42,17 @@ public class MainFragment extends BaseFragment {
     TabLayout tabLayout;
     @BindView(R.id.iv_icon)
     ImageView iv_icon;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.iv_setting)
+    ImageView iv_setting;
     private List<String> titles = new ArrayList<>();
     //记录ImageView原始的高度，和放大后的高度
     private int originalHeight,enLargeHeight;
     private boolean isEnLarge = false ;
     private List<String> imageUrlList = new ArrayList<>();
+    //记录背景图的index
+    private int imageIndex = 0;
     @Override
     public int onBindLayoutID() {
         return R.layout.fragment_main;
@@ -56,6 +66,7 @@ public class MainFragment extends BaseFragment {
         initImageView();
         initTabLayout();
         initViewPager();
+        initFab();
     }
 
     private void initData(){
@@ -85,6 +96,7 @@ public class MainFragment extends BaseFragment {
                 }
             }
         });
+        iv_setting.setOnClickListener(this);
     }
 
     /**放大控件动画，属性动画
@@ -166,6 +178,40 @@ public class MainFragment extends BaseFragment {
         });
     }
 
+    private void initFab(){
+        //设置点击事件
+        fab.setOnClickListener(this);
+        AppBarLayoutBehavior barLayoutBehavior = AppBarLayoutBehavior.from(fab);
+        //设置状态监听，滑动到隐藏返回false，滑动到完全显示返回true
+        barLayoutBehavior.setAppBarLayoutStatusListener(new AppBarLayoutBehavior.AppBarLayoutStatusListener() {
+            @Override
+            public void onStatusChanged(boolean isShow) {
+                if(isShow){
+                    //显示fab
+                    AnimatorUtil.scaleShow(fab);
+                }
+                else{
+                    //隐藏fab
+                    AnimatorUtil.scaleHide(fab);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.fab:
+                //响应fab的点击事件,更新背景图
+                setImage(getImageFormIndex(),iv_icon);
+                break;
+            case R.id.iv_setting:
+                ToastUtil.show(getContext(),"setting");
+                break;
+        }
+    }
+
     /**
      * 通过网络请求获取图片列表
      */
@@ -187,10 +233,10 @@ public class MainFragment extends BaseFragment {
                     imageUrlList.add(model.getUrl());
                 }
                 //设置图片
-                setImage(imageUrlList.get(0),iv_icon);
+                setImage(getImageFormIndex(),iv_icon);
             }
         };
-        RetrofitHttpHelper.getWelfare(subscriber,10,1);
+        RetrofitHttpHelper.getWelfare(subscriber,20,1);
     }
 
     /**为imageView设置背景图
@@ -198,5 +244,22 @@ public class MainFragment extends BaseFragment {
      */
     private void setImage(String url,ImageView imageView){
         ImageUtil.displayBigImage(getContext(),url,imageView);
+    }
+
+    /**根据下标找到图片的url
+     * @return
+     */
+    private String getImageFormIndex(){
+        String url ;
+        if(imageIndex<imageUrlList.size()){
+            url =  imageUrlList.get(imageIndex);
+            imageIndex++;
+        }
+        else{
+            //重置
+            imageIndex = 0;
+            url =  imageUrlList.get(imageIndex);
+        }
+        return url;
     }
 }
