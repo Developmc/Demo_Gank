@@ -19,14 +19,14 @@ import com.example.gankdemo.custom.view.SearchView;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.module.model.ModelFragment;
 import com.example.gankdemo.module.home.adapter.FragmentAdapter;
 import com.example.gankdemo.module.home.behavior.AppBarLayoutBehavior;
 import com.example.gankdemo.module.home.type.ModelType;
+import com.example.gankdemo.module.model.ModelFragment;
 import com.example.gankdemo.module.search.SearchFragment;
+import com.example.gankdemo.module.setting.SettingFragment;
 import com.example.gankdemo.util.AnimatorUtil;
 import com.example.gankdemo.util.ImageUtil;
-import com.example.gankdemo.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -231,7 +231,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 setImage(getImageFormIndex(),iv_icon);
                 break;
             case R.id.iv_setting:
-                ToastUtil.show(getContext(),"setting");
+                switchFragment(MainFragment.class.getSimpleName(),new SettingFragment(),
+                        SettingFragment.class.getSimpleName(),null);
                 break;
         }
     }

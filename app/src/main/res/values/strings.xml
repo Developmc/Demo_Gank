@@ -5,4 +5,5 @@
     <string name="more">更多加载中……</string>
     <string name="no_more">(*￣ω￣) 没有更多了</string>
     <string name="appbar_layout_behavior">com.example.gankdemo.module.home.behavior.AppBarLayoutBehavior</string>
+    <string name="setting">设置</string>
 </resources>
