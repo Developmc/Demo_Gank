@@ -34,7 +34,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //gson
     compile 'com.google.code.gson:gson:2.7'
-    //高级的recyclerview
+    //高级的recyclerView
     compile 'com.jude:easyrecyclerview:4.2.3'
     compile 'com.android.support:recyclerview-v7:25.0.1'
     //retrofit+RxJava
@@ -52,4 +52,6 @@ dependencies {
     compile 'com.jude:easyrecyclerview:4.3.1'
     //RecyclerView Animators
     compile 'jp.wasabeef:recyclerview-animators:2.2.4'
+    //switch button
+    compile 'com.kyleduo.switchbutton:library:1.4.4'
 }

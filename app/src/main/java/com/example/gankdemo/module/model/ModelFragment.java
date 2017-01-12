@@ -1,5 +1,6 @@
 package com.example.gankdemo.module.model;
 
+import android.content.IntentFilter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -33,7 +34,8 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
     private int page = 0;
     //用于标记类型
     private ModelType modelType;
-
+    //广播
+    private ModelBroadcastReceiver receiver;
     public void setModelType(ModelType modelType) {
         this.modelType = modelType;
     }
@@ -142,4 +144,13 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         RetrofitHttpHelper.getModelByType(modelType,subscriber,NUMBER,page);
     }
 
+    /**
+     * 注册广播，监听"缩略图"开关的变化
+     */
+    private void registerReceiver(){
+        receiver = new ModelBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter("action");
+        //注册广播
+        getContext().registerReceiver(receiver,intentFilter);
+    }
 }
