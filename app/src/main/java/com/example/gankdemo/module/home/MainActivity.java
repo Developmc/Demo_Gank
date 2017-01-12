@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.BaseActivity;
+import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
@@ -33,7 +34,17 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void testGetAndroid(int num,int page){
+    @Override
+    public void onBackPressed() {
+        //获取当前显示的fragment
+        BaseFragment baseFragment = (BaseFragment) getFragmentManager().findFragmentById(R.id.content_layout);
+        if(baseFragment!=null && !baseFragment.onBackPressed()){
+            //如果当前的fragment没有处理返回事件,执行activity的默认返回事件
+            finish();
+        }
+    }
+
+    private void testGetAndroid(int num, int page){
         BaseSubscriber<List<AllModel>> subscriber = new BaseSubscriber<List<AllModel>>(){
             @Override
             public void onCompleted() {

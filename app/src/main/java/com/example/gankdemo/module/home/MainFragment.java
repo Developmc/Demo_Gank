@@ -14,13 +14,16 @@ import android.widget.ImageView;
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.base.fragment.LazyFragment;
+import com.example.gankdemo.custom.listener.OnLayoutClickListener;
+import com.example.gankdemo.custom.view.SearchView;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.module.ModelFragment.ModelFragment;
+import com.example.gankdemo.module.model.ModelFragment;
 import com.example.gankdemo.module.home.adapter.FragmentAdapter;
 import com.example.gankdemo.module.home.behavior.AppBarLayoutBehavior;
 import com.example.gankdemo.module.home.type.ModelType;
+import com.example.gankdemo.module.search.SearchFragment;
 import com.example.gankdemo.util.AnimatorUtil;
 import com.example.gankdemo.util.ImageUtil;
 import com.example.gankdemo.util.ToastUtil;
@@ -46,6 +49,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     FloatingActionButton fab;
     @BindView(R.id.iv_setting)
     ImageView iv_setting;
+    @BindView(R.id.searchView)
+    SearchView searchView;
     private List<String> titles = new ArrayList<>();
     //记录ImageView原始的高度，和放大后的高度
     private int originalHeight,enLargeHeight;
@@ -64,6 +69,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         getImageListFromNet();
         initData();
         initImageView();
+        initSearchView();
         initTabLayout();
         initViewPager();
         initFab();
@@ -99,6 +105,17 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         iv_setting.setOnClickListener(this);
     }
 
+    private void initSearchView(){
+        //设置为不可编辑
+        searchView.setEditable(false);
+        searchView.setOnLayoutClickListener(new OnLayoutClickListener() {
+            @Override
+            public void onLayoutClick(View view) {
+                switchFragment(MainFragment.class.getSimpleName(),new SearchFragment(),
+                        SearchFragment.class.getSimpleName(),searchView,"searchView");
+            }
+        });
+    }
     /**放大控件动画，属性动画
      * @param imageView
      * @param beforeHeight

@@ -6,8 +6,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.transition.ChangeBounds;
+import android.transition.ChangeImageTransform;
+import android.transition.ChangeTransform;
+import android.transition.Fade;
+import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -238,6 +244,28 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
         transaction.add(containerViewId, toFragment, toFragmentTag).commitAllowingStateLoss();
     }
 
+    /**切换fragment，采取的是隐藏当前fragment，然后跳转到新fragment,添加转出动画
+     * @param fromFragmentTag
+     * @param toFragment
+     * @param toFragmentTag
+     * @param view
+     * @param transitionName
+     */
+    protected void switchFragment(String fromFragmentTag, BaseFragment toFragment,
+                                  String toFragmentTag,View view,String transitionName) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        if(Build.VERSION.SDK_INT>=21){
+            transaction.addSharedElement(view,transitionName);
+            manager.findFragmentByTag(fromFragmentTag).setExitTransition(new Fade());
+            toFragment.setSharedElementEnterTransition(new DetailsTransition());
+            toFragment.setEnterTransition(new Fade());
+            toFragment.setSharedElementReturnTransition(new DetailsTransition());
+        }
+        //隐藏当前fragment
+        transaction.hide(manager.findFragmentByTag(fromFragmentTag));
+        transaction.add(containerViewId, toFragment, toFragmentTag).commitAllowingStateLoss();
+    }
     /**
      * 移除当前fragment，并显示上一个fragment（该fragment处于隐藏状态）
      *
@@ -288,5 +316,15 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
     @Override
     public boolean onBackPressed() {
         return false;
+    }
+
+    @TargetApi(21)
+    public class DetailsTransition extends TransitionSet {
+        public DetailsTransition() {
+            setOrdering(ORDERING_TOGETHER);
+            addTransition(new ChangeBounds()).
+                    addTransition(new ChangeTransform()).
+                    addTransition(new ChangeImageTransform());
+        }
     }
 }

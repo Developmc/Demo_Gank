@@ -1,4 +1,4 @@
-package com.example.gankdemo.module.ModelFragment;
+package com.example.gankdemo.module.model;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
