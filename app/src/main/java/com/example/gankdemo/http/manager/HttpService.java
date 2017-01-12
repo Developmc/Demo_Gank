@@ -23,6 +23,15 @@ public interface HttpService {
     @GET("data/all/{num}/{page}")
     Observable<HttpResult<List<AllModel>>> getAll(@Path("num") int num, @Path("page") int page);
 
+    @GET("data/前端/{num}/{page}")
+    Observable<HttpResult<List<AllModel>>> getWeb(@Path("num") int num, @Path("page") int page);
+
+    @GET("data/瞎推荐/{num}/{page}")
+    Observable<HttpResult<List<AllModel>>> getRecommend(@Path("num") int num, @Path("page") int page);
+
+    @GET("data/拓展资源/{num}/{page}")
+    Observable<HttpResult<List<AllModel>>> getResource(@Path("num") int num, @Path("page") int page);
+
     @GET("data/福利/{num}/{page}")
     Observable<HttpResult<List<AllModel>>> getWelfare(@Path("num") int num, @Path("page") int page);
 

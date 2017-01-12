@@ -76,10 +76,12 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initData(){
+        titles.add("All");
         titles.add("Android");
         titles.add("IOS");
-        titles.add("All");
-        titles.add("Welfare");
+        titles.add("前端");
+        titles.add("瞎推荐");
+        titles.add("拓展资源");
     }
     private void initImageView(){
         iv_icon.setOnClickListener(new View.OnClickListener() {
@@ -148,29 +150,34 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     }
     private void initTabLayout(){
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
     }
     private void initViewPager(){
         List<LazyFragment> fragments = new ArrayList<>();
+
+        ModelFragment allFragment = new ModelFragment();
+        allFragment.setModelType(ModelType.All);
+
         ModelFragment androidFragment = new ModelFragment();
         androidFragment.setModelType(ModelType.Android);
 
         ModelFragment iosFragment = new ModelFragment();
         iosFragment.setModelType(ModelType.IOS);
 
-        ModelFragment allFragment = new ModelFragment();
-        allFragment.setModelType(ModelType.All);
+        ModelFragment webFragment = new ModelFragment();
+        webFragment.setModelType(ModelType.Web);
 
-        ModelFragment welfareFragment = new ModelFragment();
-        welfareFragment.setModelType(ModelType.Welfare);
+        ModelFragment recommendFragment = new ModelFragment();
+        recommendFragment.setModelType(ModelType.Recommend);
 
+        ModelFragment resourceFragment = new ModelFragment();
+        resourceFragment.setModelType(ModelType.Resource);
+
+        fragments.add(allFragment);
         fragments.add(androidFragment);
         fragments.add(iosFragment);
-        fragments.add(allFragment);
-        fragments.add(welfareFragment);
+        fragments.add(webFragment);
+        fragments.add(recommendFragment);
+        fragments.add(resourceFragment);
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
         //绑定
         tabLayout.setupWithViewPager(viewPager);

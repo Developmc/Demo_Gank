@@ -5,5 +5,5 @@ package com.example.gankdemo.module.home.type;
  */
 
 public enum ModelType {
-    Android,IOS,Welfare,All
+    All,Android,IOS,Web,Recommend, Resource
 }

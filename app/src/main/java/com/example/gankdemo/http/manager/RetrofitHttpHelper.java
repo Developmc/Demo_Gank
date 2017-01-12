@@ -50,6 +50,30 @@ public class RetrofitHttpHelper extends RetrofitHttp{
         toSubscribe(observable,subscriber);
     }
 
+    public static void getWeb(BaseSubscriber<List<AllModel>> subscriber, int num, int page){
+        //创建观察者
+        Observable<List<AllModel>> observable = getService().getWeb(num,page)
+                .map(new HttpResultFunc<List<AllModel>>());
+        //订阅
+        toSubscribe(observable,subscriber);
+    }
+
+    public static void getRecommend(BaseSubscriber<List<AllModel>> subscriber, int num, int page){
+        //创建观察者
+        Observable<List<AllModel>> observable = getService().getRecommend(num,page)
+                .map(new HttpResultFunc<List<AllModel>>());
+        //订阅
+        toSubscribe(observable,subscriber);
+    }
+
+    public static void getResource(BaseSubscriber<List<AllModel>> subscriber, int num, int page){
+        //创建观察者
+        Observable<List<AllModel>> observable = getService().getResource(num,page)
+                .map(new HttpResultFunc<List<AllModel>>());
+        //订阅
+        toSubscribe(observable,subscriber);
+    }
+
     public static void getModelByType(ModelType modelType,BaseSubscriber<List<AllModel>> subscriber, int num, int page){
         switch (modelType){
             case Android:
@@ -61,8 +85,14 @@ public class RetrofitHttpHelper extends RetrofitHttp{
             case All:
                 getAll(subscriber, num, page);
                 break;
-            case Welfare:
-                getWelfare(subscriber, num, page);
+            case Web:
+                getWeb(subscriber, num, page);
+                break;
+            case Recommend:
+                getRecommend(subscriber, num, page);
+                break;
+            case Resource:
+                getResource(subscriber, num, page);
                 break;
             default:
                 getAndroid(subscriber,num,page);
