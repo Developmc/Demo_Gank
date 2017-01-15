@@ -1,20 +1,27 @@
 package com.example.gankdemo.module.model;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.LazyFragment;
+import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.custom.decoration.SpaceItemDecoration;
 import com.example.gankdemo.custom.listener.OnItemClickListener;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.module.home.adapter.RecyclerViewAdapter;
 import com.example.gankdemo.module.home.type.ModelType;
+import com.example.gankdemo.util.DensityUtil;
+import com.example.gankdemo.util.SPUtil;
 import com.example.gankdemo.util.ToastUtil;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 
 import java.util.List;
 
@@ -25,7 +32,9 @@ import butterknife.BindView;
  */
 
 public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.OnMoreListener
-        ,RecyclerArrayAdapter.OnNoMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener{
+        ,RecyclerArrayAdapter.OnNoMoreListener,
+        android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener,
+        IListener{
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
@@ -39,6 +48,8 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
 
     @Override
     protected void initLazyBehavior() {
+        //注册监听器
+        ListenerManager.getInstance().registerListener(this);
         initRecyclerView();
     }
 
@@ -51,8 +62,10 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         //设置分割线
-        SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration(4);
-        recyclerView.addItemDecoration(spaceItemDecoration);
+        DividerDecoration dividerDecoration = new DividerDecoration(ContextCompat.getColor(
+                getContext(),R.color.gray_300), DensityUtil.dip2px(getContext(),0.5f),
+                DensityUtil.dip2px(getContext(),8),DensityUtil.dip2px(getContext(),8));
+        recyclerView.addItemDecoration(dividerDecoration);
         adapter = new RecyclerViewAdapter(getContext());
         adapter.setOnItemClickListener(new OnItemClickListener<AllModel>() {
             @Override
@@ -141,4 +154,13 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         RetrofitHttpHelper.getModelByType(modelType,subscriber,NUMBER,page);
     }
 
+    /**响应设置页面的缩略图改变的回调
+     * @param bundle
+     */
+    @Override
+    public void notifyAllFragment(Bundle bundle) {
+        boolean isShowIcon = (boolean)SPUtil.get(getContext(), SPUConstant.SHOW_THUMBNAIL,false);
+        //刷新adapter
+        adapter.refreshShow(isShowIcon);
+    }
 }

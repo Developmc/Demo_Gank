@@ -1,13 +1,20 @@
-package com.example.gankdemo.module.home.adapter;
+package com.example.gankdemo.module.model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.gankdemo.R;
+import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.util.ImageUtil;
+import com.example.gankdemo.util.SPUtil;
 import com.example.gankdemo.util.TimeUtil;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -23,10 +30,13 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
     private Context mContext;
+    //判断是否显示缩略图
+    private boolean isShowIcon = false ;
     private com.example.gankdemo.custom.listener.OnItemClickListener<AllModel> onItemClickListener;
     public RecyclerViewAdapter(Context context) {
         super(context);
         this.mContext = context;
+        isShowIcon = (boolean)SPUtil.get(mContext, SPUConstant.SHOW_THUMBNAIL,false);
     }
 
     @Override
@@ -36,6 +46,8 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
     }
 
     public class ViewHolder extends BaseViewHolder<AllModel>{
+        @BindView(R.id.iv_icon)
+        ImageView iv_icon;
         @BindView(R.id.tv_title)
         TextView tv_title;
         @BindView(R.id.tv_name)
@@ -58,6 +70,19 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
         @Override
         public void setData(AllModel data) {
             super.setData(data);
+            if(isShowIcon){
+                iv_icon.setVisibility(View.VISIBLE);
+                //拉去图片
+                Glide.with(mContext)
+                        .load(getImageUrl(data))
+                        .crossFade()
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(iv_icon);
+            }
+            else{
+                iv_icon.setVisibility(View.GONE);
+            }
             tv_title.setText(data.getDesc());
             tv_name.setText(data.getWho());
             tv_date.setText(TimeUtil.getDate(data.getPublishedAt()));
@@ -77,5 +102,25 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
      */
     public List<AllModel> getDatas(){
         return mObjects;
+    }
+
+    /**刷新显示
+     * @param isShowIcon
+     */
+    public void refreshShow(boolean isShowIcon){
+        this.isShowIcon = isShowIcon;
+        notifyDataSetChanged();
+    }
+
+    /**获取缩略图的url,拉去想要的尺寸
+     * @param data
+     * @return
+     */
+    private String getImageUrl(@NonNull AllModel data){
+        String temp = "?imageView2/0/w/100";
+        if(data.getImages()!=null && !data.getImages().isEmpty()){
+            return data.getImages().get(0)+temp;
+        }
+        return "";
     }
 }

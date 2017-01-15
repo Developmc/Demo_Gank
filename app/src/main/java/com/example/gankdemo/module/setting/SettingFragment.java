@@ -9,6 +9,7 @@ import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.module.home.MainFragment;
+import com.example.gankdemo.module.model.ListenerManager;
 import com.example.gankdemo.util.SPUtil;
 import com.kyleduo.switchbutton.SwitchButton;
 
@@ -43,22 +44,12 @@ public class SettingFragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 //更新状态
                 SPUtil.set(getContext(),SPUConstant.SHOW_THUMBNAIL,b);
-                //发送一个自定义的广播
-                sendCustomBroadcast();
+                //通知fragment刷新
+                ListenerManager.getInstance().informAll(null);
             }
         });
     }
 
-    /**
-     * 发送广播
-     */
-    private void sendCustomBroadcast(){
-        Intent intent = new Intent();
-        //设置action
-        intent.setAction("action");
-        //发送无序广播
-        getContext().sendBroadcast(intent);
-    }
     @OnClick(R.id.iv_back)
     void onBackClick(){
         onBackPressed();
