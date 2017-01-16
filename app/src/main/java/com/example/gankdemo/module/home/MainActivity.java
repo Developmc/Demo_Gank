@@ -1,7 +1,7 @@
 package com.example.gankdemo.module.home;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.example.gankdemo.R;
@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity {
 //        setNightMode();
 
         if(savedInstanceState==null){
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             MainFragment mainFragment = new MainFragment();
             fragmentTransaction.add(R.id.content_layout,mainFragment,
                     MainFragment.class.getSimpleName()).commit();
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         //获取当前显示的fragment
-        BaseFragment baseFragment = (BaseFragment) getFragmentManager().findFragmentById(R.id.content_layout);
+        BaseFragment baseFragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.content_layout);
         if(baseFragment!=null && !baseFragment.onBackPressed()){
             //如果当前的fragment没有处理返回事件,执行activity的默认返回事件
             finish();

@@ -3,10 +3,10 @@ package com.example.gankdemo.module.home;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Fragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -293,20 +293,25 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void onRecreate() {
         super.onRecreate();
+        fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
+        //绑定
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setAdapter(fragmentAdapter);
+        viewPager.setOffscreenPageLimit(4);
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        try {
-            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-
-
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        try {
+//            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+//            childFragmentManager.setAccessible(true);
+//            childFragmentManager.set(this, null);
+//
+//
+//        } catch (NoSuchFieldException e) {
+//            throw new RuntimeException(e);
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }

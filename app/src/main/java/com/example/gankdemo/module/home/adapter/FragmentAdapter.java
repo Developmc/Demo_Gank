@@ -1,9 +1,8 @@
 package com.example.gankdemo.module.home.adapter;
 
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.gankdemo.base.fragment.LazyFragment;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class FragmentAdapter extends FragmentStatePagerAdapter {
     private List<LazyFragment> fragments ;
     private List<String> titles;//tab中的title文字列表
-    public FragmentAdapter(FragmentManager fm, List<LazyFragment> fragments,List<String> titles) {
+    public FragmentAdapter(FragmentManager fm, List<LazyFragment> fragments, List<String> titles) {
         super(fm);
         this.fragments = fragments;
         this.titles = titles;
