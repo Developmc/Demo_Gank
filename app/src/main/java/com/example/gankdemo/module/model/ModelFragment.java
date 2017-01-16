@@ -1,16 +1,13 @@
 package com.example.gankdemo.module.model;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.LazyFragment;
 import com.example.gankdemo.constants.SPUConstant;
-import com.example.gankdemo.custom.decoration.SpaceItemDecoration;
 import com.example.gankdemo.custom.listener.OnItemClickListener;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
@@ -162,5 +159,19 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         boolean isShowIcon = (boolean)SPUtil.get(getContext(), SPUConstant.SHOW_THUMBNAIL,false);
         //刷新adapter
         adapter.refreshShow(isShowIcon);
+    }
+
+    /**
+     * fragment重建时，调用这个方法
+     */
+    @Override
+    protected void onRecreate() {
+        super.onRecreate();
+        if(adapter!=null){
+            //重新绑定activity
+            adapter.setContext(getContext());
+            //刷新recyclerView
+            adapter.notifyDataSetChanged();
+        }
     }
 }

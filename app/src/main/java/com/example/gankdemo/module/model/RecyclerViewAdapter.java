@@ -13,7 +13,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.gankdemo.R;
 import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.util.ImageUtil;
 import com.example.gankdemo.util.SPUtil;
 import com.example.gankdemo.util.TimeUtil;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -75,6 +74,7 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
                 //拉去图片
                 Glide.with(mContext)
                         .load(getImageUrl(data))
+                        .placeholder(R.drawable.ic_default)
                         .crossFade()
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -122,5 +122,13 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
             return data.getImages().get(0)+temp;
         }
         return "";
+    }
+
+    /**更新content
+     * @param mContext
+     */
+    @Override
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
     }
 }

@@ -60,6 +60,13 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
         mContext = context;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //activity重建时保存Fragment的交互状态(activity重建时,fragment不执行onCreate和onDestroy)
+        setRetainInstance(true);
+    }
+
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
         if (rootView == null) {
@@ -67,7 +74,18 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
             ButterKnife.bind(this, rootView);
             initBehavior(rootView);
         }
+        //activity重建
+        else{
+            onRecreate();
+        }
         return rootView;
+    }
+
+    /**
+     * activity重建时，fragment会回调这个方法
+     */
+    protected void onRecreate(){
+
     }
 
     /**

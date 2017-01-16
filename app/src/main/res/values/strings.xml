@@ -8,4 +8,5 @@
     <string name="setting">设置</string>
     <string name="basic_setting">基本设置</string>
     <string name="show_thumbnail">显示缩略图</string>
+    <string name="night_mode">夜间模式</string>
 </resources>

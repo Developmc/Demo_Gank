@@ -3,6 +3,7 @@ package com.example.gankdemo.module.home;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Fragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -28,6 +29,7 @@ import com.example.gankdemo.module.setting.SettingFragment;
 import com.example.gankdemo.util.AnimatorUtil;
 import com.example.gankdemo.util.ImageUtil;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +60,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     private List<String> imageUrlList = new ArrayList<>();
     //记录背景图的index
     private int imageIndex = 0;
+    private List<LazyFragment> fragments = new ArrayList<>();
+    private FragmentAdapter fragmentAdapter;
     @Override
     public int onBindLayoutID() {
         return R.layout.fragment_main;
@@ -152,8 +156,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
     private void initViewPager(){
-        List<LazyFragment> fragments = new ArrayList<>();
-
         ModelFragment allFragment = new ModelFragment();
         allFragment.setModelType(ModelType.All);
 
@@ -178,7 +180,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         fragments.add(webFragment);
         fragments.add(recommendFragment);
         fragments.add(resourceFragment);
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
+        fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
         //绑定
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(fragmentAdapter);
@@ -286,5 +288,25 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
             url =  imageUrlList.get(imageIndex);
         }
         return url;
+    }
+
+    @Override
+    protected void onRecreate() {
+        super.onRecreate();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

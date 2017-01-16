@@ -28,10 +28,15 @@
         <TextView
             android:text="@string/show_thumbnail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_thumbnail"
+            android:drawableStart="@drawable/ic_thumbnail"
+            />
 
         <com.kyleduo.switchbutton.SwitchButton
-            android:id="@+id/sb_select"
+            android:id="@+id/sb_thumbnail"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
@@ -44,6 +49,47 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/gray_300"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp">
+        <TextView
+            android:text="@string/night_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_month"
+            android:drawableStart="@drawable/ic_month"
+            />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_night"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:kswThumbColor="@color/white"
+            app:kswBackDrawable="@drawable/selector_switch_button" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/gray_300"/>
 
 </LinearLayout>

@@ -9,6 +9,19 @@ import com.example.gankdemo.http.manager.RetrofitHttpHelper;
  */
 
 public class GankApplication extends Application {
+
+    private static GankApplication application;
+    public static GankApplication getInstance() {
+        if (application == null) {
+            synchronized (GankApplication.class) {
+                if (application == null) {
+                    application = new GankApplication();
+                }
+            }
+        }
+        return application;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
