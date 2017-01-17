@@ -74,8 +74,10 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
             ButterKnife.bind(this, rootView);
             initBehavior(rootView);
         }
-        //activity重建
+        //activity重建,夜间模式切换
         else{
+            //刷新view
+            rootView.postInvalidate();
             onRecreate();
         }
         return rootView;

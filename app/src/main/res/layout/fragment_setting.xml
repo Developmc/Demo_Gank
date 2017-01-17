@@ -14,8 +14,9 @@
         android:paddingLeft="8dp"
         android:paddingEnd="8dp"
         android:paddingRight="8dp"
-        android:background="@color/gray_300"
-        android:text="@string/basic_setting"/>
+        android:background="@color/layout_division_color"
+        android:text="@string/basic_setting"
+        android:textColor="@color/text_color"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

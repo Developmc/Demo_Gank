@@ -68,9 +68,6 @@ public class SettingFragment extends BaseFragment {
                 else{
                     ((MainActivity)getActivity()).setLocalNightMode(MODE_NIGHT_NO);
                 }
-
-                //通知fragment刷新
-//                ListenerManager.getInstance().informAll(null);
             }
         });
     }
@@ -86,4 +83,5 @@ public class SettingFragment extends BaseFragment {
                 MainFragment.class.getSimpleName());
         return true;
     }
+
 }

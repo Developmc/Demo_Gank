@@ -9,6 +9,9 @@
     <color name="gray_200">#EEEEEE</color>
     <color name="gray_300">#E0E0E0</color>
     <color name="gray_500">#9E9E9E</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
     <color name="transparent_gray_500">#80707070</color>
 
     <color name="green">#4CAF50</color>
@@ -17,4 +20,8 @@
     <color name="white">#FFFFFF</color>
 
     <color name="redDark">#F44336</color>
+
+    <color name="layout_division_color">@color/gray_100</color>
+    <color name="text_color">@color/gray_500</color>
+
 </resources>

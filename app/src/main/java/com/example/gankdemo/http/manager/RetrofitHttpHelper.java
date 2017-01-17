@@ -75,6 +75,9 @@ public class RetrofitHttpHelper extends RetrofitHttp{
     }
 
     public static void getModelByType(ModelType modelType,BaseSubscriber<List<AllModel>> subscriber, int num, int page){
+        if(modelType==null){
+            modelType = ModelType.Android;
+        }
         switch (modelType){
             case Android:
                 getAndroid(subscriber,num,page);

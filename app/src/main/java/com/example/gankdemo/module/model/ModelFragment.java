@@ -39,6 +39,11 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
     private int page = 0;
     //用于标记类型
     private ModelType modelType;
+    public ModelFragment(){}
+    public ModelFragment(ModelType modelType){
+        this.modelType = modelType;
+    }
+
     public void setModelType(ModelType modelType) {
         this.modelType = modelType;
     }
@@ -159,19 +164,5 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         boolean isShowIcon = (boolean)SPUtil.get(getContext(), SPUConstant.SHOW_THUMBNAIL,false);
         //刷新adapter
         adapter.refreshShow(isShowIcon);
-    }
-
-    /**
-     * fragment重建时，调用这个方法
-     */
-    @Override
-    protected void onRecreate() {
-        super.onRecreate();
-        if(adapter!=null){
-            //重新绑定activity
-            adapter.setContext(getContext());
-            //刷新recyclerView
-            adapter.notifyDataSetChanged();
-        }
     }
 }

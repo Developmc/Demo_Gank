@@ -2,21 +2,15 @@ package com.example.gankdemo.module.home;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.BaseActivity;
 import com.example.gankdemo.base.fragment.BaseFragment;
-import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
-import com.example.gankdemo.util.SPUtil;
 
 import java.util.List;
-
-import static android.support.v7.app.AppCompatDelegate.MODE_NIGHT_NO;
-import static android.support.v7.app.AppCompatDelegate.MODE_NIGHT_YES;
 
 /**Created by clement on 17/01/07.
  * 框架：单activity + 多fragment
@@ -30,9 +24,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initBehavior(Bundle savedInstanceState) {
-        //设置当前的模式
-//        setNightMode();
-
         if(savedInstanceState==null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             MainFragment mainFragment = new MainFragment();
@@ -40,19 +31,6 @@ public class MainActivity extends BaseActivity {
                     MainFragment.class.getSimpleName()).commit();
         }
 
-    }
-
-    /**
-     * //设置当前是日间模式还是夜间模式
-     */
-    private void setNightMode(){
-        boolean isNightMode = (boolean) SPUtil.get(this, SPUConstant.NIGHT_MODE,false);
-        if(isNightMode){
-            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
-        }
-        else{
-            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO);
-        }
     }
 
     @Override
@@ -150,6 +128,6 @@ public class MainActivity extends BaseActivity {
      */
     public void setLocalNightMode(int mode){
         getDelegate().setLocalNightMode(mode);
-//        recreate();
+        recreate();
     }
 }

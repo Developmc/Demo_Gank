@@ -2,7 +2,7 @@ package com.example.gankdemo.module.home.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.gankdemo.base.fragment.LazyFragment;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by clement on 17/1/9.
  */
 
-public class FragmentAdapter extends FragmentStatePagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
     private List<LazyFragment> fragments ;
     private List<String> titles;//tab中的title文字列表
     public FragmentAdapter(FragmentManager fm, List<LazyFragment> fragments, List<String> titles) {
@@ -37,4 +37,5 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return titles.get(position);
     }
+
 }

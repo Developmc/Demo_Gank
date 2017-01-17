@@ -58,8 +58,8 @@
                     android:layout_height="wrap_content"
                     android:transitionName="searchView"
                     app:hint="搜索干货"
-                    app:hintColor="@color/gray_500"
-                    app:imageColor="@color/gray_500"
+                    app:hintColor="?android:textColorHint"
+                    app:imageColor="?android:textColorHint"
                     />
             </RelativeLayout>
 

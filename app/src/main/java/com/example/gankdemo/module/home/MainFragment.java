@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import com.example.gankdemo.module.setting.SettingFragment;
 import com.example.gankdemo.util.AnimatorUtil;
 import com.example.gankdemo.util.ImageUtil;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,23 +154,17 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
     private void initViewPager(){
-        ModelFragment allFragment = new ModelFragment();
-        allFragment.setModelType(ModelType.All);
+        ModelFragment allFragment = new ModelFragment(ModelType.All);
 
-        ModelFragment androidFragment = new ModelFragment();
-        androidFragment.setModelType(ModelType.Android);
+        ModelFragment androidFragment = new ModelFragment(ModelType.Android);
 
-        ModelFragment iosFragment = new ModelFragment();
-        iosFragment.setModelType(ModelType.IOS);
+        ModelFragment iosFragment = new ModelFragment(ModelType.IOS);
 
-        ModelFragment webFragment = new ModelFragment();
-        webFragment.setModelType(ModelType.Web);
+        ModelFragment webFragment = new ModelFragment(ModelType.Web);
 
-        ModelFragment recommendFragment = new ModelFragment();
-        recommendFragment.setModelType(ModelType.Recommend);
+        ModelFragment recommendFragment = new ModelFragment(ModelType.Recommend);
 
-        ModelFragment resourceFragment = new ModelFragment();
-        resourceFragment.setModelType(ModelType.Resource);
+        ModelFragment resourceFragment = new ModelFragment(ModelType.Resource);
 
         fragments.add(allFragment);
         fragments.add(androidFragment);
@@ -180,11 +172,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         fragments.add(webFragment);
         fragments.add(recommendFragment);
         fragments.add(resourceFragment);
-        fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
+        fragmentAdapter = new FragmentAdapter(getChildFragmentManager(),fragments,titles);
         //绑定
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(6);
         //滑动监听
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -270,7 +262,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
      * @param url
      */
     private void setImage(String url,ImageView imageView){
-        ImageUtil.displayBigImage(getContext(),url,imageView);
+        //这里使用全局的context，当activity销毁时，context过期会导致没法显示图片
+        ImageUtil.displayBigImage(getContext().getApplicationContext(),url,imageView);
     }
 
     /**根据下标找到图片的url
@@ -290,28 +283,4 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         return url;
     }
 
-    @Override
-    protected void onRecreate() {
-        super.onRecreate();
-        fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
-        //绑定
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(4);
-    }
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        try {
-//            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-//            childFragmentManager.setAccessible(true);
-//            childFragmentManager.set(this, null);
-//
-//
-//        } catch (NoSuchFieldException e) {
-//            throw new RuntimeException(e);
-//        } catch (IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

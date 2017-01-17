@@ -72,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
             if(isShowIcon){
                 iv_icon.setVisibility(View.VISIBLE);
                 //拉去图片
-                Glide.with(mContext)
+                Glide.with(mContext.getApplicationContext())
                         .load(getImageUrl(data))
                         .placeholder(R.drawable.ic_default)
                         .crossFade()
