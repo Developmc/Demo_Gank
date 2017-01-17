@@ -19,9 +19,11 @@
         android:textColor="@color/text_color"/>
 
     <RelativeLayout
+        android:id="@+id/layout_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
+        android:background="?attr/colorBackground"
         android:paddingStart="8dp"
         android:paddingLeft="8dp"
         android:paddingEnd="8dp"
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:drawablePadding="8dp"
+            android:background="?attr/colorBackground"
             android:drawableLeft="@drawable/ic_thumbnail"
             android:drawableStart="@drawable/ic_thumbnail"
             />
@@ -57,9 +60,11 @@
         android:background="@color/gray_300"/>
 
     <RelativeLayout
+        android:id="@+id/layout_mode"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
+        android:background="?attr/colorBackground"
         android:paddingStart="8dp"
         android:paddingLeft="8dp"
         android:paddingEnd="8dp"
@@ -68,6 +73,7 @@
             android:text="@string/night_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/colorBackground"
             android:gravity="center_vertical"
             android:drawablePadding="8dp"
             android:drawableLeft="@drawable/ic_month"

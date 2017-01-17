@@ -34,7 +34,7 @@ public class GankApplication extends Application {
         //初始化retrofit
         RetrofitHttpHelper.init(this);
         //设置当前的模式
-        setNightMode();
+//        setNightMode();
     }
     /**
      * //设置当前是日间模式还是夜间模式
