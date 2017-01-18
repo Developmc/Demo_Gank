@@ -2,7 +2,6 @@ package com.example.gankdemo.module.home;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.BaseActivity;
@@ -14,9 +13,6 @@ import com.example.gankdemo.model.AllModel;
 import com.example.gankdemo.util.SPUtil;
 
 import java.util.List;
-
-import static android.support.v7.app.AppCompatDelegate.MODE_NIGHT_NO;
-import static android.support.v7.app.AppCompatDelegate.MODE_NIGHT_YES;
 
 /**Created by clement on 17/01/07.
  * 框架：单activity + 多fragment
@@ -148,7 +144,7 @@ public class MainActivity extends BaseActivity {
      * @param mode
      */
     public void setLocalNightMode(int mode){
-        getDelegate().setLocalNightMode(mode);
-        recreate();
+//        getDelegate().setLocalNightMode(mode);
+//        recreate();
     }
 }
