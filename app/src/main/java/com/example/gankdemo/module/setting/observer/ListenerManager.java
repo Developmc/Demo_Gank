@@ -1,6 +1,5 @@
-package com.example.gankdemo.module.model;
+package com.example.gankdemo.module.setting.observer;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -44,11 +43,11 @@ public class ListenerManager {
     }
 
     /**通知所有的观察者
-     * @param bundle
+     * @param actionType
      */
-    public  void informAll(Bundle bundle){
+    public void informAll(ActionType actionType){
         for(IListener listener:listenerList){
-            listener.notifyAllFragment(bundle);
+            listener.notifyAllFragment(actionType);
         }
     }
 }

@@ -3,9 +3,15 @@ package com.example.gankdemo.module.home;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +31,12 @@ import com.example.gankdemo.module.home.type.ModelType;
 import com.example.gankdemo.module.model.ModelFragment;
 import com.example.gankdemo.module.search.SearchFragment;
 import com.example.gankdemo.module.setting.SettingFragment;
+import com.example.gankdemo.module.setting.observer.ActionType;
+import com.example.gankdemo.module.setting.observer.IListener;
+import com.example.gankdemo.module.setting.observer.ListenerManager;
 import com.example.gankdemo.util.AnimatorUtil;
 import com.example.gankdemo.util.ImageUtil;
+import com.example.gankdemo.util.NightModeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +46,7 @@ import butterknife.BindView;
 /**
  * MainFragment
  */
-public class MainFragment extends BaseFragment implements View.OnClickListener {
+public class MainFragment extends BaseFragment implements View.OnClickListener,IListener {
     @BindView(R.id.rootView)
     CoordinatorLayout rootView;
     @BindView(R.id.viewpager)
@@ -51,6 +61,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     ImageView iv_setting;
     @BindView(R.id.searchView)
     SearchView searchView;
+    @BindView(R.id.appbar)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsing_toolbar;
     private List<String> titles = new ArrayList<>();
     //记录ImageView原始的高度，和放大后的高度
     private int originalHeight,enLargeHeight;
@@ -75,6 +89,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         initTabLayout();
         initViewPager();
         initFab();
+        //注册监听器
+        ListenerManager.getInstance().registerListener(this);
     }
 
     private void initData(){
@@ -197,6 +213,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initFab(){
+        //设置背景色
+        fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getStatusBarColor(getContext())));
         //设置点击事件
         fab.setOnClickListener(this);
         AppBarLayoutBehavior barLayoutBehavior = AppBarLayoutBehavior.from(fab);
@@ -283,4 +301,25 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         return url;
     }
 
+    /**响应设置页面夜间模式切换的回调
+     * @param actionType
+     */
+    @Override
+    public void notifyAllFragment(ActionType actionType) {
+        if(actionType==ActionType.nightMode){
+            iv_setting.setColorFilter(NightModeUtil.getImageColor(getContext()));
+            fab.setColorFilter(NightModeUtil.getImageColor(getContext()));
+            fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getStatusBarColor(getContext())));
+            searchView.getEtContent().setHintTextColor(NightModeUtil.getTextColor(getContext()));
+            searchView.getSearchIcon().setColorFilter(NightModeUtil.getTextColor(getContext()));
+            Drawable drawable = ContextCompat.getDrawable(getContext(),R.drawable.shape_corner);
+            //api大于16
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                searchView.setBackground(drawable);
+            }
+            //改变AppBarLayout的背景色
+            collapsing_toolbar.setContentScrimColor(NightModeUtil.getStatusBarColor(getContext()));
+            appBarLayout.setBackgroundColor(NightModeUtil.getStatusBarColor(getContext()));
+        }
+    }
 }

@@ -1,8 +1,5 @@
 package com.example.gankdemo.module.setting;
 
-import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +12,9 @@ import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.custom.view.ItemSwitchButton;
 import com.example.gankdemo.custom.view.listener.OnItemSelectedListener;
 import com.example.gankdemo.module.home.MainFragment;
-import com.example.gankdemo.module.model.ListenerManager;
+import com.example.gankdemo.module.setting.observer.ActionType;
+import com.example.gankdemo.module.setting.observer.ListenerManager;
+import com.example.gankdemo.util.NightModeUtil;
 import com.example.gankdemo.util.SPUtil;
 import com.example.gankdemo.util.StatusBarUtil;
 
@@ -62,7 +61,7 @@ public class SettingFragment extends BaseFragment {
                 //更新状态
                 SPUtil.set(getContext(),SPUConstant.SHOW_THUMBNAIL,isSelected);
                 //通知fragment刷新
-                ListenerManager.getInstance().informAll(null);
+                ListenerManager.getInstance().informAll(ActionType.thumbnail);
             }
         });
 
@@ -79,6 +78,8 @@ public class SettingFragment extends BaseFragment {
                 // http://www.jianshu.com/p/3b55e84742e5
                 toggleThemeSetting(isSelected);
                 refreshUI();
+                //刷新完当前页面再通知刷新其他已经打开的页面
+                ListenerManager.getInstance().informAll(ActionType.nightMode);
             }
         });
     }
@@ -99,29 +100,18 @@ public class SettingFragment extends BaseFragment {
      * 刷新UI，页面已经创建，这时更改主题是不会刷新页面的
      */
     private void refreshUI(){
-        TypedValue background = new TypedValue();
-        TypedValue textColor = new TypedValue();
-        TypedValue lineColor = new TypedValue();
-        TypedValue imageColor = new TypedValue();
-        TypedValue statusBarColor = new TypedValue();
-        Resources.Theme theme = getActivity().getTheme();
-        theme.resolveAttribute(R.attr.colorBackground,background,true);
-        theme.resolveAttribute(R.attr.colorText,textColor,true);
-        theme.resolveAttribute(R.attr.colorLine,lineColor,true);
-        theme.resolveAttribute(R.attr.colorImage,imageColor,true);
-        theme.resolveAttribute(R.attr.colorPrimary,statusBarColor,true);
-        layout_mode.getItemLayout().setBackgroundResource(background.resourceId);
-        layout_mode.getTvLabel().setTextColor(ContextCompat.getColor(getContext(),textColor.resourceId));
-        layout_mode.getLineView().setBackgroundResource(lineColor.resourceId);
-        layout_thumbnail.getItemLayout().setBackgroundResource(background.resourceId);
-        layout_thumbnail.getTvLabel().setTextColor(ContextCompat.getColor(getContext(),textColor.resourceId));
-        layout_thumbnail.getLineView().setBackgroundResource(lineColor.resourceId);
+        layout_mode.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_mode.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
+        layout_mode.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
+        layout_thumbnail.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_thumbnail.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
+        layout_thumbnail.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
 
-        StatusBarUtil.setWindowsStatusBarColor(getActivity(),statusBarColor.resourceId);
-        rootView.setBackgroundResource(background.resourceId);
-        iv_back.setColorFilter(ContextCompat.getColor(getContext(),imageColor.resourceId));
-        layout_title.setBackgroundResource(background.resourceId);
-        tv_title.setTextColor(ContextCompat.getColor(getContext(),textColor.resourceId));
+        StatusBarUtil.setWindowsStatusBarColor(getActivity(),NightModeUtil.getStatusBarColor(getContext()));
+        rootView.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        iv_back.setColorFilter(NightModeUtil.getImageColor(getContext()));
+        layout_title.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        tv_title.setTextColor(NightModeUtil.getTextColor(getContext()));
     }
 
     @OnClick(R.id.iv_back)

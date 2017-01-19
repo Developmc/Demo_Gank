@@ -1,9 +1,11 @@
 package com.example.gankdemo.module.model;
 
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.LazyFragment;
@@ -13,13 +15,20 @@ import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
 import com.example.gankdemo.module.home.type.ModelType;
+import com.example.gankdemo.module.setting.observer.ActionType;
+import com.example.gankdemo.module.setting.observer.IListener;
+import com.example.gankdemo.module.setting.observer.ListenerManager;
 import com.example.gankdemo.util.DensityUtil;
+import com.example.gankdemo.util.NightModeUtil;
 import com.example.gankdemo.util.SPUtil;
 import com.example.gankdemo.util.ToastUtil;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +40,7 @@ import butterknife.BindView;
 public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.OnMoreListener
         ,RecyclerArrayAdapter.OnNoMoreListener,
         android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener,
-        IListener{
+        IListener {
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
@@ -157,12 +166,50 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
     }
 
     /**响应设置页面的缩略图改变的回调
-     * @param bundle
+     * @param actionType
      */
     @Override
-    public void notifyAllFragment(Bundle bundle) {
-        boolean isShowIcon = (boolean)SPUtil.get(getContext(), SPUConstant.SHOW_THUMBNAIL,false);
-        //刷新adapter
-        adapter.refreshShow(isShowIcon);
+    public void notifyAllFragment(ActionType actionType) {
+        //如果是缩略图更改
+        if(actionType==ActionType.thumbnail){
+            boolean isShowIcon = (boolean)SPUtil.get(getContext(), SPUConstant.SHOW_THUMBNAIL,false);
+            //刷新adapter
+            adapter.refreshShow(isShowIcon);
+        }
+        //如果是夜间模式切换
+        else if(actionType==ActionType.nightMode){
+            int childCount = recyclerView.getRecyclerView().getChildCount();
+            for(int index=0;index<childCount;index++){
+                ViewGroup childView = (ViewGroup)recyclerView.getRecyclerView().getChildAt(index);
+                childView.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+                ((TextView)childView.findViewById(R.id.tv_title)).setTextColor(NightModeUtil.getTextColor(getContext()));
+                ((TextView)childView.findViewById(R.id.tv_name)).setTextColor(NightModeUtil.getTextColor(getContext()));
+                ((TextView)childView.findViewById(R.id.tv_date)).setTextColor(NightModeUtil.getTextColor(getContext()));
+            }
+            //让 RecyclerView 缓存在 Pool 中的 Item 失效
+            Class<RecyclerView> recyclerViewClass = RecyclerView.class;
+            try {
+                Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
+                declaredField.setAccessible(true);
+                Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
+                declaredMethod.setAccessible(true);
+                declaredMethod.invoke(declaredField.get(recyclerView.getRecyclerView()), new Object[0]);
+                RecyclerView.RecycledViewPool recycledViewPool = recyclerView.getRecyclerView().getRecycledViewPool();
+                recycledViewPool.clear();
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }

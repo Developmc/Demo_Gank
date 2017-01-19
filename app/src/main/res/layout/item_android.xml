@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/colorBackground"
     android:foreground="?android:attr/selectableItemBackground">
     <ImageView
         android:id="@+id/iv_icon"
@@ -20,6 +22,7 @@
         android:padding="8dp">
         <TextView
             android:id="@+id/tv_title"
+            android:textColor="?attr/colorText"
             android:textStyle="bold"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
@@ -31,6 +34,7 @@
             tools:text="title"/>
         <TextView
             android:id="@+id/tv_name"
+            android:textColor="?attr/colorText"
             android:layout_below="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,6 +44,7 @@
             tools:text="who"/>
         <TextView
             android:id="@+id/tv_date"
+            android:textColor="?attr/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_name"

@@ -30,6 +30,8 @@ public class SearchView extends LinearLayout {
     ImageView iv_clear;
     @BindView(R.id.iv_search)
     ImageView iv_search;
+    @BindView(R.id.rootView)
+    LinearLayout itemLayout;
     private OnSearchClickListener onSearchClickListener;
     private OnLayoutClickListener onLayoutClickListener;
     public SearchView(Context context) {
@@ -126,6 +128,13 @@ public class SearchView extends LinearLayout {
 
     public EditText getEtContent(){
         return et_content;
+    }
+
+    public ImageView getSearchIcon(){
+        return iv_search;
+    }
+    public LinearLayout getItemLayout(){
+        return  itemLayout;
     }
 
     /**
