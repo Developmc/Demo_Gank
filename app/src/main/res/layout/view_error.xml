@@ -5,4 +5,5 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="48dp"
     android:gravity="center"
+    android:textColor="?attr/colorText"
     android:text="@string/error_recycle_view"/>

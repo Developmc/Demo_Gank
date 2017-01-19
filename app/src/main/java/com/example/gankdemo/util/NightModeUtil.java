@@ -52,4 +52,11 @@ public class NightModeUtil {
         return ContextCompat.getColor(context, statusBarColor.resourceId);
     }
 
+    public static int getFloatActionButtonColor(Context context){
+        TypedValue floatActionButtonColor = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorFloatActionButton, floatActionButtonColor,true);
+        return ContextCompat.getColor(context, floatActionButtonColor.resourceId);
+    }
+
 }

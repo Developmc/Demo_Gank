@@ -53,10 +53,6 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         this.modelType = modelType;
     }
 
-    public void setModelType(ModelType modelType) {
-        this.modelType = modelType;
-    }
-
     @Override
     protected void initLazyBehavior() {
         //注册监听器
@@ -90,6 +86,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         recyclerView.setRefreshListener(this);
         recyclerView.setEmptyView(R.layout.view_empty);
         recyclerView.setErrorView(R.layout.view_error);
+        recyclerView.setProgressView(R.layout.view_progress);
         recyclerView.showProgress();
         recyclerView.getSwipeToRefresh().setColorSchemeResources(R.color.colorPrimary,
                 R.color.green,R.color.orange);
@@ -178,6 +175,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         }
         //如果是夜间模式切换
         else if(actionType==ActionType.nightMode){
+            //修改recyclerView的背景色
             int childCount = recyclerView.getRecyclerView().getChildCount();
             for(int index=0;index<childCount;index++){
                 ViewGroup childView = (ViewGroup)recyclerView.getRecyclerView().getChildAt(index);
@@ -208,7 +206,12 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-
+            //更改完模式后，重新设置
+            adapter.setMore(R.layout.view_more,this);
+            adapter.setNoMore(R.layout.view_nomore,this);
+            recyclerView.setEmptyView(R.layout.view_empty);
+            recyclerView.setErrorView(R.layout.view_error);
+            recyclerView.setProgressView(R.layout.view_progress);
         }
 
     }

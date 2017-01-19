@@ -213,8 +213,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
     }
 
     private void initFab(){
+        //设置图片颜色
+        fab.setColorFilter(NightModeUtil.getImageColor(getContext()));
         //设置背景色
-        fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getStatusBarColor(getContext())));
+        fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getFloatActionButtonColor(getContext())));
         //设置点击事件
         fab.setOnClickListener(this);
         AppBarLayoutBehavior barLayoutBehavior = AppBarLayoutBehavior.from(fab);
@@ -309,7 +311,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
         if(actionType==ActionType.nightMode){
             iv_setting.setColorFilter(NightModeUtil.getImageColor(getContext()));
             fab.setColorFilter(NightModeUtil.getImageColor(getContext()));
-            fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getStatusBarColor(getContext())));
+            fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getFloatActionButtonColor(getContext())));
             searchView.getEtContent().setHintTextColor(NightModeUtil.getTextColor(getContext()));
             searchView.getSearchIcon().setColorFilter(NightModeUtil.getTextColor(getContext()));
             Drawable drawable = ContextCompat.getDrawable(getContext(),R.drawable.shape_corner);

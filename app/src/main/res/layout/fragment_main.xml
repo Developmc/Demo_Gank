@@ -93,7 +93,7 @@
         android:layout_marginRight="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:tint="?attr/colorImage"
+        android:tint="?attr/colorFloatActionButton"
         android:src="@drawable/ic_switch"
         app:pressedTranslationZ="16dp"
         app:layout_behavior="@string/appbar_layout_behavior"/>

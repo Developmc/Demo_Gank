@@ -3,12 +3,15 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:background="?attr/colorBackground"
     android:gravity="center">
     <ProgressBar
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:indeterminate="false"/>
     <TextView
+        android:id="@+id/tv_content"
+        android:textColor="?attr/colorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/more"/>
