@@ -9,4 +9,12 @@
     <string name="basic_setting">基本设置</string>
     <string name="show_thumbnail">显示缩略图</string>
     <string name="night_mode">夜间模式</string>
+
+    <string name="share">分享</string>
+    <string name="copy_link">复制链接</string>
+    <string name="open_with">用浏览器打开</string>
+
+    <string name="share_to">分享到</string>
+    <string name="copied">已复制</string>
+    <string name="web_select">请选择浏览器</string>
 </resources>

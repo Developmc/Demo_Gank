@@ -5,4 +5,8 @@
     <attr name="colorLine" format="color"/>
     <attr name="colorImage" format="color"/>
     <attr name="colorFloatActionButton" format="color"/>
+    <attr name="colorProgress" format="color"/>
+    <attr name="colorProgressWebView" format="color"/>
+    <attr name="colorToolbarText" format="color"/>
+    <attr name="colorStatusBar" format="color"/>
 </resources>

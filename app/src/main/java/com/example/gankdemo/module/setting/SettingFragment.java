@@ -110,7 +110,7 @@ public class SettingFragment extends BaseFragment {
         StatusBarUtil.setWindowsStatusBarColor(getActivity(),NightModeUtil.getStatusBarColor(getContext()));
         rootView.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
         iv_back.setColorFilter(NightModeUtil.getImageColor(getContext()));
-        layout_title.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_title.setBackgroundColor(NightModeUtil.getStatusBarColor(getContext()));
         tv_title.setTextColor(NightModeUtil.getTextColor(getContext()));
     }
 

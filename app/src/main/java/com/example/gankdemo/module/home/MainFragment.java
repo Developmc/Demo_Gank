@@ -188,7 +188,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
         fragments.add(webFragment);
         fragments.add(recommendFragment);
         fragments.add(resourceFragment);
-        fragmentAdapter = new FragmentAdapter(getChildFragmentManager(),fragments,titles);
+        fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments,titles);
         //绑定
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(fragmentAdapter);
@@ -322,6 +322,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
             //改变AppBarLayout的背景色
             collapsing_toolbar.setContentScrimColor(NightModeUtil.getStatusBarColor(getContext()));
             appBarLayout.setBackgroundColor(NightModeUtil.getStatusBarColor(getContext()));
+            //更改viewPager的背景色
+            viewPager.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
         }
     }
 }

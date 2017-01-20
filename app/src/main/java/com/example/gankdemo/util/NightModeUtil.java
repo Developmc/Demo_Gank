@@ -48,7 +48,7 @@ public class NightModeUtil {
     public static int getStatusBarColor(Context context){
         TypedValue statusBarColor = new TypedValue();
         Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, statusBarColor,true);
+        theme.resolveAttribute(R.attr.colorStatusBar, statusBarColor,true);
         return ContextCompat.getColor(context, statusBarColor.resourceId);
     }
 
@@ -57,6 +57,13 @@ public class NightModeUtil {
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(R.attr.colorFloatActionButton, floatActionButtonColor,true);
         return ContextCompat.getColor(context, floatActionButtonColor.resourceId);
+    }
+
+    public static int getProgressColor(Context context){
+        TypedValue progressColor = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorProgress, progressColor,true);
+        return ContextCompat.getColor(context, progressColor.resourceId);
     }
 
 }

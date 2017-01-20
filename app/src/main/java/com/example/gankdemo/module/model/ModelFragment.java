@@ -1,5 +1,6 @@
 package com.example.gankdemo.module.model;
 
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +10,14 @@ import android.widget.TextView;
 
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.LazyFragment;
+import com.example.gankdemo.constants.BundleConstant;
 import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.custom.listener.OnItemClickListener;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.module.detail.DetailFragment;
+import com.example.gankdemo.module.home.MainFragment;
 import com.example.gankdemo.module.home.type.ModelType;
 import com.example.gankdemo.module.setting.observer.ActionType;
 import com.example.gankdemo.module.setting.observer.IListener;
@@ -21,7 +25,7 @@ import com.example.gankdemo.module.setting.observer.ListenerManager;
 import com.example.gankdemo.util.DensityUtil;
 import com.example.gankdemo.util.NightModeUtil;
 import com.example.gankdemo.util.SPUtil;
-import com.example.gankdemo.util.ToastUtil;
+import com.example.gankdemo.util.SnackbarUtil;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
@@ -77,7 +81,11 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         adapter.setOnItemClickListener(new OnItemClickListener<AllModel>() {
             @Override
             public void onItemClick(View itemView, int position) {
-                ToastUtil.show(getContext(),position+"");
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleConstant.URL,adapter.getDatas().get(position).getUrl());
+                bundle.putString(BundleConstant.TITLE,adapter.getDatas().get(position).getDesc());
+                switchFragment(MainFragment.class.getSimpleName(),new DetailFragment(),
+                        DetailFragment.class.getSimpleName(),bundle);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -104,7 +112,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                ToastUtil.show(getContext(),e.getMessage());
+                SnackbarUtil.show(recyclerView,e.getMessage());
             }
 
             @Override
@@ -125,7 +133,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
 
     @Override
     public void onNoMoreShow() {
-        ToastUtil.show(getContext(),"onNoMoreShow");
+        SnackbarUtil.show(recyclerView,"onNoMoreShow");
     }
 
     @Override
@@ -145,7 +153,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             public void onError(Throwable e) {
                 super.onError(e);
                 recyclerView.showError();
-                ToastUtil.show(getContext(),e.getMessage());
+                SnackbarUtil.show(recyclerView,e.getMessage());
             }
 
             @Override
@@ -180,9 +188,15 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             for(int index=0;index<childCount;index++){
                 ViewGroup childView = (ViewGroup)recyclerView.getRecyclerView().getChildAt(index);
                 childView.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
-                ((TextView)childView.findViewById(R.id.tv_title)).setTextColor(NightModeUtil.getTextColor(getContext()));
-                ((TextView)childView.findViewById(R.id.tv_name)).setTextColor(NightModeUtil.getTextColor(getContext()));
-                ((TextView)childView.findViewById(R.id.tv_date)).setTextColor(NightModeUtil.getTextColor(getContext()));
+                TextView tvTitle = ((TextView)childView.findViewById(R.id.tv_title));
+                TextView tvName = ((TextView)childView.findViewById(R.id.tv_name));
+                TextView tvDate = ((TextView)childView.findViewById(R.id.tv_date));
+                //当recyclerView没有数据时，对应的布局中没有这三个textView
+                if(tvTitle!=null){
+                    tvTitle.setTextColor(NightModeUtil.getTextColor(getContext()));
+                    tvName.setTextColor(NightModeUtil.getTextColor(getContext()));
+                    tvDate.setTextColor(NightModeUtil.getTextColor(getContext()));
+                }
             }
             //让 RecyclerView 缓存在 Pool 中的 Item 失效
             Class<RecyclerView> recyclerViewClass = RecyclerView.class;

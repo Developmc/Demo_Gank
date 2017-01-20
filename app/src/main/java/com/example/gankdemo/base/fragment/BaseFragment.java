@@ -76,8 +76,6 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
         }
         //activity重建,夜间模式切换
         else{
-            //刷新view
-            rootView.postInvalidate();
             onRecreate();
         }
         return rootView;

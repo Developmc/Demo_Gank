@@ -26,18 +26,25 @@
         <item name="colorLine">@color/gray_300</item>
         <item name="colorImage">@color/gray_800</item>
         <item name="colorFloatActionButton">@color/colorPrimary</item>
-
+        <item name="colorProgress">@color/colorPrimary</item>
+        <item name="colorProgressWebView">@color/orange</item>
+        <item name="colorToolbarText">@color/white</item>
+        <item name="colorStatusBar">@color/colorPrimary</item>
     </style>
     <!--夜间主题-->
     <style name="NightTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/gray_800</item>
-        <item name="colorPrimaryDark">@color/gray_800</item>
+        <item name="colorPrimary">@color/gray_700</item>
+        <item name="colorPrimaryDark">@color/gray_700</item>
         <item name="colorAccent">@color/gray_800</item>
         <item name="colorBackground">@color/gray_800</item>
         <item name="colorText">@color/gray_500</item>
         <item name="colorLine">@color/gray_700</item>
         <item name="colorImage">@color/gray_500</item>
         <item name="colorFloatActionButton">@color/gray_700</item>
+        <item name="colorProgress">@color/gray_700</item>
+        <item name="colorProgressWebView">@color/green</item>
+        <item name="colorToolbarText">@color/white</item>
+        <item name="colorStatusBar">@color/gray_700</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

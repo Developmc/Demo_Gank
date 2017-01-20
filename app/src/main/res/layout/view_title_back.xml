@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_title"
-    android:background="?attr/colorBackground"
+    android:background="?attr/colorStatusBar"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:gravity="center_vertical">
