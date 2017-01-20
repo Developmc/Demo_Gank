@@ -66,4 +66,25 @@ public class NightModeUtil {
         return ContextCompat.getColor(context, progressColor.resourceId);
     }
 
+    public static int getToolbarTextColor(Context context){
+        TypedValue toolbarTextColor = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorToolbarText, toolbarTextColor,true);
+        return ContextCompat.getColor(context, toolbarTextColor.resourceId);
+    }
+
+    public static int getToolbarImageColor(Context context){
+        TypedValue toolbarImageColor = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorToolbarImage, toolbarImageColor,true);
+        return ContextCompat.getColor(context, toolbarImageColor.resourceId);
+    }
+
+    public static int getFloatActionImageColor(Context context){
+        TypedValue floatActionImageColor = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorFloatActionImage, floatActionImageColor,true);
+        return ContextCompat.getColor(context, floatActionImageColor.resourceId);
+    }
+
 }

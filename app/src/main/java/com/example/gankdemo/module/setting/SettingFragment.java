@@ -1,5 +1,6 @@
 package com.example.gankdemo.module.setting;
 
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,13 +11,18 @@ import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.custom.view.ItemSwitchButton;
+import com.example.gankdemo.custom.view.ItemTextView;
 import com.example.gankdemo.custom.view.listener.OnItemSelectedListener;
 import com.example.gankdemo.module.home.MainFragment;
 import com.example.gankdemo.module.setting.observer.ActionType;
 import com.example.gankdemo.module.setting.observer.ListenerManager;
+import com.example.gankdemo.util.GlideCacheUtil;
 import com.example.gankdemo.util.NightModeUtil;
 import com.example.gankdemo.util.SPUtil;
+import com.example.gankdemo.util.SnackbarUtil;
 import com.example.gankdemo.util.StatusBarUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +44,8 @@ public class SettingFragment extends BaseFragment {
     ItemSwitchButton layout_mode;
     @BindView(R.id.layout_thumbnail)
     ItemSwitchButton layout_thumbnail;
+    @BindView(R.id.layout_cache)
+    ItemTextView layout_cache;
     @Override
     public int onBindLayoutID() {
         return R.layout.fragment_setting;
@@ -47,6 +55,7 @@ public class SettingFragment extends BaseFragment {
     public void initBehavior(View rootView) {
         tv_title.setText(getString(R.string.setting));
         initSwitchButton();
+        initItemTextView();
     }
 
     private void initSwitchButton(){
@@ -84,6 +93,41 @@ public class SettingFragment extends BaseFragment {
         });
     }
 
+    private void initItemTextView(){
+        layout_cache.getTvLabel().setText(getString(R.string.clear_cache));
+        layout_cache.setLeftImage(R.drawable.ic_clear);
+        //显示缓存的照片
+        layout_cache.getTvValue().setText(GlideCacheUtil.getInstance().getDiskCacheSize(getContext()));
+        layout_cache.getItemLayout().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //开启线程
+                new ClearTask().execute();
+            }
+        });
+    }
+    class ClearTask extends AsyncTask<String,Void,List<String>>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            SnackbarUtil.show(layout_cache,getString(R.string.clearing));
+        }
+
+        @Override
+        protected List<String> doInBackground(String... strings) {
+            //执行清除
+            GlideCacheUtil.getInstance().clearImageDiskCache(getContext());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            super.onPostExecute(strings);
+            //执行完成,更新界面
+            layout_cache.getTvValue().setText(GlideCacheUtil.getInstance().getDiskCacheSize(getContext()));
+            SnackbarUtil.show(layout_cache,getString(R.string.clear_finish));
+        }
+    }
     /**设置主题
      * @param isNight
      */
@@ -106,12 +150,16 @@ public class SettingFragment extends BaseFragment {
         layout_thumbnail.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
         layout_thumbnail.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
         layout_thumbnail.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
+        layout_cache.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_cache.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
+        layout_cache.getTvValue().setTextColor(NightModeUtil.getTextColor(getContext()));
+        layout_cache.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
 
         StatusBarUtil.setWindowsStatusBarColor(getActivity(),NightModeUtil.getStatusBarColor(getContext()));
         rootView.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
-        iv_back.setColorFilter(NightModeUtil.getImageColor(getContext()));
+        iv_back.setColorFilter(NightModeUtil.getToolbarImageColor(getContext()));
         layout_title.setBackgroundColor(NightModeUtil.getStatusBarColor(getContext()));
-        tv_title.setTextColor(NightModeUtil.getTextColor(getContext()));
+        tv_title.setTextColor(NightModeUtil.getToolbarTextColor(getContext()));
     }
 
     @OnClick(R.id.iv_back)

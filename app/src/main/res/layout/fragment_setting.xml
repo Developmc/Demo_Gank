@@ -18,4 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"/>
 
+    <com.example.gankdemo.custom.view.ItemTextView
+        android:id="@+id/layout_cache"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"/>
+
 </LinearLayout>

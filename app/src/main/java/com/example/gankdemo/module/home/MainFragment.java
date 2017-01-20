@@ -214,7 +214,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
 
     private void initFab(){
         //设置图片颜色
-        fab.setColorFilter(NightModeUtil.getImageColor(getContext()));
+        fab.setColorFilter(NightModeUtil.getFloatActionImageColor(getContext()));
         //设置背景色
         fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getFloatActionButtonColor(getContext())));
         //设置点击事件
@@ -310,7 +310,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
     public void notifyAllFragment(ActionType actionType) {
         if(actionType==ActionType.nightMode){
             iv_setting.setColorFilter(NightModeUtil.getImageColor(getContext()));
-            fab.setColorFilter(NightModeUtil.getImageColor(getContext()));
+            fab.setColorFilter(NightModeUtil.getFloatActionImageColor(getContext()));
             fab.setBackgroundTintList(ColorStateList.valueOf(NightModeUtil.getFloatActionButtonColor(getContext())));
             searchView.getEtContent().setHintTextColor(NightModeUtil.getTextColor(getContext()));
             searchView.getSearchIcon().setColorFilter(NightModeUtil.getTextColor(getContext()));

@@ -19,7 +19,7 @@
     <!-- 白天主题 -->
     <style name="DayTheme" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorBackground">@color/white</item>
         <item name="colorText">@color/gray_800</item>
@@ -29,7 +29,9 @@
         <item name="colorProgress">@color/colorPrimary</item>
         <item name="colorProgressWebView">@color/orange</item>
         <item name="colorToolbarText">@color/white</item>
+        <item name="colorToolbarImage">@color/white</item>
         <item name="colorStatusBar">@color/colorPrimary</item>
+        <item name="colorFloatActionImage">@color/white</item>
     </style>
     <!--夜间主题-->
     <style name="NightTheme" parent="AppTheme">
@@ -43,8 +45,10 @@
         <item name="colorFloatActionButton">@color/gray_700</item>
         <item name="colorProgress">@color/gray_700</item>
         <item name="colorProgressWebView">@color/green</item>
-        <item name="colorToolbarText">@color/white</item>
+        <item name="colorToolbarText">@color/gray_500</item>
+        <item name="colorToolbarImage">@color/gray_500</item>
         <item name="colorStatusBar">@color/gray_700</item>
+        <item name="colorFloatActionImage">@color/gray_500</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
