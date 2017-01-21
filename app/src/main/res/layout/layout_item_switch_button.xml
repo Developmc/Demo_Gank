@@ -6,7 +6,7 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
     android:clickable="true"
-    android:background="?attr/colorBackground"
+    android:background="@drawable/ripple_background"
     android:layout_width="match_parent"
     android:layout_height="49dp">
     <android.support.v7.widget.AppCompatTextView

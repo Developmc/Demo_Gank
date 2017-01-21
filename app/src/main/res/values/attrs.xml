@@ -11,4 +11,5 @@
     <attr name="colorToolbarImage" format="color"/>
     <attr name="colorStatusBar" format="color"/>
     <attr name="colorFloatActionImage" format="color"/>
+    <attr name="colorRipple" format="color"/>
 </resources>

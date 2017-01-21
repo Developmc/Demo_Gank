@@ -1,6 +1,8 @@
 package com.example.gankdemo.module.setting;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -144,13 +146,13 @@ public class SettingFragment extends BaseFragment {
      * 刷新UI，页面已经创建，这时更改主题是不会刷新页面的
      */
     private void refreshUI(){
-        layout_mode.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_mode.getItemLayout().setBackground(ContextCompat.getDrawable(getContext(),R.drawable.ripple_background));
         layout_mode.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
         layout_mode.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
-        layout_thumbnail.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_thumbnail.getItemLayout().setBackground(ContextCompat.getDrawable(getContext(),R.drawable.ripple_background));
         layout_thumbnail.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
         layout_thumbnail.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
-        layout_cache.getItemLayout().setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+        layout_cache.getItemLayout().setBackground(ContextCompat.getDrawable(getContext(),R.drawable.ripple_background));
         layout_cache.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
         layout_cache.getTvValue().setTextColor(NightModeUtil.getTextColor(getContext()));
         layout_cache.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));

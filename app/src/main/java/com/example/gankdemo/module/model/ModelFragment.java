@@ -187,7 +187,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
             int childCount = recyclerView.getRecyclerView().getChildCount();
             for(int index=0;index<childCount;index++){
                 ViewGroup childView = (ViewGroup)recyclerView.getRecyclerView().getChildAt(index);
-                childView.setBackgroundColor(NightModeUtil.getBackgroundColor(getContext()));
+                childView.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.ripple_background));
                 TextView tvTitle = ((TextView)childView.findViewById(R.id.tv_title));
                 TextView tvName = ((TextView)childView.findViewById(R.id.tv_name));
                 TextView tvDate = ((TextView)childView.findViewById(R.id.tv_date));
