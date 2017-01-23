@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.example.gankdemo.R;
 import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.constants.BundleConstant;
-import com.example.gankdemo.module.home.MainFragment;
 import com.example.gankdemo.util.SnackbarUtil;
 
 import butterknife.BindView;
@@ -40,6 +39,7 @@ public class DetailFragment extends BaseFragment {
     ProgressBar progressBar;
     private String titleString;
     private String url;
+    private String fromTag;
     @Override
     public int onBindLayoutID() {
         return R.layout.fragment_detail;
@@ -54,6 +54,7 @@ public class DetailFragment extends BaseFragment {
     private void initData(){
         titleString = getArguments().getString(BundleConstant.TITLE);
         url = getArguments().getString(BundleConstant.URL);
+        fromTag = getArguments().getString(BundleConstant.FROM_TAG);
     }
     private void initToolbar(){
         //将toolbar作为独立的控件使用，不和ActionBar进行关联
@@ -106,7 +107,7 @@ public class DetailFragment extends BaseFragment {
             webView.goBack();
         }
         else{
-            remove2ShowFragment(DetailFragment.class.getSimpleName(), MainFragment.class.getSimpleName());
+            remove2ShowFragment(DetailFragment.class.getSimpleName(),fromTag);
         }
         return true;
     }

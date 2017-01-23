@@ -47,7 +47,7 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
         IListener {
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
+    private ModelRecyclerViewAdapter adapter;
     private static final int NUMBER = 10;
     private int page = 0;
     //用于标记类型
@@ -77,13 +77,14 @@ public class ModelFragment extends LazyFragment implements RecyclerArrayAdapter.
                 getContext(),R.color.gray_300), DensityUtil.dip2px(getContext(),0.5f),
                 DensityUtil.dip2px(getContext(),8),DensityUtil.dip2px(getContext(),8));
         recyclerView.addItemDecoration(dividerDecoration);
-        adapter = new RecyclerViewAdapter(getContext());
+        adapter = new ModelRecyclerViewAdapter(getContext());
         adapter.setOnItemClickListener(new OnItemClickListener<AllModel>() {
             @Override
             public void onItemClick(View itemView, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(BundleConstant.URL,adapter.getDatas().get(position).getUrl());
                 bundle.putString(BundleConstant.TITLE,adapter.getDatas().get(position).getDesc());
+                bundle.putString(BundleConstant.FROM_TAG,MainFragment.class.getSimpleName());
                 switchFragment(MainFragment.class.getSimpleName(),new DetailFragment(),
                         DetailFragment.class.getSimpleName(),bundle);
             }

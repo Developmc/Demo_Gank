@@ -2,6 +2,7 @@ package com.example.gankdemo.http.manager;
 
 import com.example.gankdemo.http.subscriber.BaseSubscriber;
 import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.model.SearchModel;
 import com.example.gankdemo.module.home.type.ModelType;
 
 import java.util.List;
@@ -73,6 +74,13 @@ public class RetrofitHttpHelper extends RetrofitHttp{
         //订阅
         toSubscribe(observable,subscriber);
     }
+
+    public static void getSearchModel(BaseSubscriber<List<SearchModel>> subscriber,String search,int num,int page){
+        Observable<List<SearchModel>> observable = getService().getSearch(search,num,page)
+                .map(new HttpResultFunc<List<SearchModel>>());
+        toSubscribe(observable,subscriber);
+    }
+
 
     public static void getModelByType(ModelType modelType,BaseSubscriber<List<AllModel>> subscriber, int num, int page){
         if(modelType==null){

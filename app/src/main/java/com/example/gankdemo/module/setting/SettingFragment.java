@@ -1,6 +1,5 @@
 package com.example.gankdemo.module.setting;
 
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -108,6 +107,10 @@ public class SettingFragment extends BaseFragment {
             }
         });
     }
+
+    /**
+     * 异步线程处理图片清除
+     */
     class ClearTask extends AsyncTask<String,Void,List<String>>{
         @Override
         protected void onPreExecute() {

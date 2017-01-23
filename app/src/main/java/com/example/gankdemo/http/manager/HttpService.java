@@ -2,6 +2,7 @@ package com.example.gankdemo.http.manager;
 
 import com.example.gankdemo.http.entity.HttpResult;
 import com.example.gankdemo.model.AllModel;
+import com.example.gankdemo.model.SearchModel;
 
 import java.util.List;
 
@@ -34,5 +35,8 @@ public interface HttpService {
 
     @GET("data/福利/{num}/{page}")
     Observable<HttpResult<List<AllModel>>> getWelfare(@Path("num") int num, @Path("page") int page);
+
+    @GET("search/query/listview/category/{type}/count/{num}/page/{page}")
+    Observable<HttpResult<List<SearchModel>>> getSearch(@Path("type") String type, @Path("num") int num, @Path("page") int page);
 
 }

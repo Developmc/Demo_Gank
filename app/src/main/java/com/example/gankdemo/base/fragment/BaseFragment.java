@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.transition.ChangeBounds;
 import android.transition.ChangeImageTransform;
 import android.transition.ChangeTransform;
-import android.transition.Fade;
 import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -275,10 +274,10 @@ public abstract class BaseFragment extends Fragment implements FragmentInitializ
         FragmentTransaction transaction = manager.beginTransaction();
         if(Build.VERSION.SDK_INT>=21){
             transaction.addSharedElement(view,transitionName);
-            manager.findFragmentByTag(fromFragmentTag).setExitTransition(new Fade());
-            toFragment.setSharedElementEnterTransition(new DetailsTransition());
-            toFragment.setEnterTransition(new Fade());
-            toFragment.setSharedElementReturnTransition(new DetailsTransition());
+//            manager.findFragmentByTag(fromFragmentTag).setExitTransition(new Fade());
+//            toFragment.setSharedElementEnterTransition(new DetailsTransition());
+//            toFragment.setEnterTransition(new Fade());
+//            toFragment.setSharedElementReturnTransition(new DetailsTransition());
         }
         //隐藏当前fragment
         transaction.hide(manager.findFragmentByTag(fromFragmentTag));

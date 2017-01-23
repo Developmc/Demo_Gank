@@ -27,12 +27,12 @@ import butterknife.ButterKnife;
  * Created by developmc on 17/1/8.
  */
 
-public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
+public class ModelRecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
     private Context mContext;
     //判断是否显示缩略图
     private boolean isShowIcon = false ;
     private com.example.gankdemo.custom.listener.OnItemClickListener<AllModel> onItemClickListener;
-    public RecyclerViewAdapter(Context context) {
+    public ModelRecyclerViewAdapter(Context context) {
         super(context);
         this.mContext = context;
         isShowIcon = (boolean)SPUtil.get(mContext, SPUConstant.SHOW_THUMBNAIL,false);
@@ -40,7 +40,7 @@ public class RecyclerViewAdapter extends RecyclerArrayAdapter<AllModel> {
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_android,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_all,parent,false);
         return new ViewHolder(view);
     }
 
