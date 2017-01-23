@@ -4,6 +4,6 @@ package com.example.gankdemo.base.interfaces;
  * Created by developmc on 17/1/23.
  */
 
-public interface BasePresenter {
+public interface BasePresenter<T> {
     void start();
 }
