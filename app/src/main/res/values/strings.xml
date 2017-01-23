@@ -20,4 +20,5 @@
     <string name="clear_cache">清除缓存</string>
     <string name="clear_finish">已清除</string>
     <string name="clearing">清除中</string>
+    <string name="input_search_content">请输入搜索内容</string>
 </resources>

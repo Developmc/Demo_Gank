@@ -290,6 +290,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener,I
      * @return
      */
     private String getImageFormIndex(){
+        if(imageUrlList==null || imageUrlList.isEmpty()){
+            return "";
+        }
         String url ;
         if(imageIndex<imageUrlList.size()){
             url =  imageUrlList.get(imageIndex);

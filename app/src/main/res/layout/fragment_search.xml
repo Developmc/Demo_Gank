@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="?attr/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:background="@color/colorPrimary"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_back"
-            />
-        <com.example.gankdemo.custom.view.SearchView
-            android:id="@+id/searchView"
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:transitionName="searchView"
-            app:hint="搜索干货"
-            app:hasFocusable="true"/>
-    </LinearLayout>
-    <RelativeLayout
-        android:background="@color/colorAccent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/layout_item_search"
+            app:layout_scrollFlags="scroll|enterAlways|snap"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipe_refresh_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--&gt;-->
+        <!--<com.jude.easyrecyclerview.EasyRecyclerView-->
+            <!--android:id="@+id/recyclerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+            <!--app:recyclerClipToPadding="true"-->
+            <!--app:scrollbarStyle="insideOverlay"-->
+            <!--app:scrollbars="vertical"/>-->
+
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></RelativeLayout>
-</LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:recyclerClipToPadding="true"
+        app:scrollbarStyle="insideOverlay"
+        app:scrollbars="vertical"/>
+
+
+</android.support.design.widget.CoordinatorLayout>
