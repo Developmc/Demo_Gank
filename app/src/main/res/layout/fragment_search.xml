@@ -12,26 +12,16 @@
         android:layout_height="48dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <include layout="@layout/layout_item_search"
-            app:layout_scrollFlags="scroll|enterAlways|snap"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
+
+            <include layout="@layout/layout_item_search" />
+
+        </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <!--<android.support.v4.widget.SwipeRefreshLayout-->
-        <!--android:id="@+id/swipe_refresh_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--&gt;-->
-        <!--<com.jude.easyrecyclerview.EasyRecyclerView-->
-            <!--android:id="@+id/recyclerView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-            <!--app:recyclerClipToPadding="true"-->
-            <!--app:scrollbarStyle="insideOverlay"-->
-            <!--app:scrollbars="vertical"/>-->
-
-    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
