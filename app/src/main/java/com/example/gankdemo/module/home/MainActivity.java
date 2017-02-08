@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.gankdemo.R;
-import com.example.gankdemo.base.BaseActivity;
+import com.example.gankdemo.base.activity.BaseActivity;
 import com.example.gankdemo.base.fragment.BaseFragment;
 import com.example.gankdemo.constants.SPUConstant;
 import com.example.gankdemo.http.manager.RetrofitHttpHelper;
