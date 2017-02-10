@@ -1,4 +1,4 @@
-package com.example.gankdemo.base;
+package com.example.gankdemo.base.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -1,6 +1,8 @@
 package com.example.gankdemo.module.setting;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,7 +34,7 @@ import butterknife.OnClick;
  * Created by clement on 17/1/12.
  */
 
-public class SettingFragment extends BaseFragment {
+public class SettingFragment extends BaseFragment implements SettingView{
     @BindView(R.id.rootView)
     LinearLayout rootView;
     @BindView(R.id.layout_title)
@@ -47,6 +49,7 @@ public class SettingFragment extends BaseFragment {
     ItemSwitchButton layout_thumbnail;
     @BindView(R.id.layout_cache)
     ItemTextView layout_cache;
+    private SettingPresenter settingPresenter;
     @Override
     public int onBindLayoutID() {
         return R.layout.fragment_setting;
@@ -57,6 +60,10 @@ public class SettingFragment extends BaseFragment {
         tv_title.setText(getString(R.string.setting));
         initSwitchButton();
         initItemTextView();
+        //设置presenter
+        settingPresenter = new SettingPresenter();
+        settingPresenter.attachView(this);
+        settingPresenter.start();
     }
 
     private void initSwitchButton(){
@@ -68,10 +75,7 @@ public class SettingFragment extends BaseFragment {
         layout_thumbnail.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onSelected(boolean isSelected) {
-                //更新状态
-                SPUtil.set(getContext(),SPUConstant.SHOW_THUMBNAIL,isSelected);
-                //通知fragment刷新
-                ListenerManager.getInstance().informAll(ActionType.thumbnail);
+                settingPresenter.onThumbnailSelected(isSelected);
             }
         });
 
@@ -83,13 +87,7 @@ public class SettingFragment extends BaseFragment {
         layout_mode.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onSelected(boolean isSelected) {
-                //更新状态
-                SPUtil.set(getContext(),SPUConstant.NIGHT_MODE,isSelected);
-                // http://www.jianshu.com/p/3b55e84742e5
-                toggleThemeSetting(isSelected);
-                refreshUI();
-                //刷新完当前页面再通知刷新其他已经打开的页面
-                ListenerManager.getInstance().informAll(ActionType.nightMode);
+                settingPresenter.onModeSelected(isSelected);
             }
         });
     }
@@ -102,53 +100,16 @@ public class SettingFragment extends BaseFragment {
         layout_cache.getItemLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //开启线程
-                new ClearTask().execute();
+                settingPresenter.onCacheClick();
             }
         });
     }
 
     /**
-     * 异步线程处理图片清除
-     */
-    class ClearTask extends AsyncTask<String,Void,List<String>>{
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            SnackbarUtil.show(layout_cache,getString(R.string.clearing));
-        }
-
-        @Override
-        protected List<String> doInBackground(String... strings) {
-            //执行清除
-            GlideCacheUtil.getInstance().clearImageDiskCache(getContext());
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<String> strings) {
-            super.onPostExecute(strings);
-            //执行完成,更新界面
-            layout_cache.getTvValue().setText(GlideCacheUtil.getInstance().getDiskCacheSize(getContext()));
-            SnackbarUtil.show(layout_cache,getString(R.string.clear_finish));
-        }
-    }
-    /**设置主题
-     * @param isNight
-     */
-    private void toggleThemeSetting(boolean isNight){
-        if(isNight){
-            getActivity().setTheme(R.style.NightTheme);
-        }
-        else{
-            getActivity().setTheme(R.style.DayTheme);
-        }
-    }
-
-    /**
      * 刷新UI，页面已经创建，这时更改主题是不会刷新页面的
      */
-    private void refreshUI(){
+    @Override
+    public void refreshUI(){
         layout_mode.getItemLayout().setBackground(ContextCompat.getDrawable(getContext(),R.drawable.ripple_background));
         layout_mode.getTvLabel().setTextColor(NightModeUtil.getTextColor(getContext()));
         layout_mode.getLineView().setBackgroundColor(NightModeUtil.getLineColor(getContext()));
@@ -179,4 +140,18 @@ public class SettingFragment extends BaseFragment {
         return true;
     }
 
+    @Override
+    public void showSnackBar(@NonNull String content) {
+        SnackbarUtil.show(layout_cache,content);
+    }
+
+    @Override
+    public void setLayoutCacheText(@NonNull String cacheText) {
+        layout_cache.getTvValue().setText(cacheText);
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
+    }
 }
