@@ -5,10 +5,10 @@
 「Gank」是 [Gank.io](http://gank.io) 第三方安卓客户端，UI设计来自于Github上其他Gank app.每天提供一张精选的妹纸图片，若干精选的Android，ios，web等相关的技术干货。
 
 ## 截图
-![ugank1.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/1.gif)
-![ugank2.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/2.gif)
-![ugank3.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/3.gif)
-![ugank4.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/4.gif)
+![ugank1.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/Gank_1.gif)
+![ugank2.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/Gank_2.gif)
+![ugank3.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/Gank_3.gif)
+![ugank4.gif](https://github.com/Developmc/Demo_Gank/blob/master/app/src/main/assets/Gank_4.gif)
 
 ## APP设计
 ###App包含下面几个页面:
